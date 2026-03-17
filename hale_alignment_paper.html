@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axis Orientation and Precessional Correspondence at Göbekli Tepe — Hale (2022)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #fdfaf5;
+    --ink: #1c1c1a;
+    --ink-mid: #3a3832;
+    --ink-light: #5a5750;
+    --rule: #c4bdb0;
+    --rule-light: #ddd8ce;
+    --accent: #3d5a47;        /* forest green — different register from the red of the big paper */
+    --accent-soft: #5a7a66;
+    --note-bg: #f4f1ea;
+    --highlight: #edf2ee;     /* very faint green tint for highlighted boxes */
+    --max: 760px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: #ddd8cf;
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.0rem;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Top strips ── */
+  .top-bar {
+    background: var(--accent);
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    padding: 0.45rem 1rem;
+    font-size: 0.69rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  .fiction-bar {
+    background: #2a2a28;
+    color: #b8aa90;
+    text-align: center;
+    padding: 0.6rem 2rem;
+    font-size: 0.76rem;
+    font-style: italic;
+    font-family: 'Lora', serif;
+    letter-spacing: 0.04em;
+  }
+  .fiction-bar a { color: #8aaa78; text-decoration: underline; }
+
+  /* ── Paper ── */
+  .paper {
+    max-width: var(--max);
+    margin: 2.5rem auto 4rem;
+    background: var(--paper);
+    box-shadow: 0 3px 32px rgba(0,0,0,0.18), 0 1px 5px rgba(0,0,0,0.10);
+    padding: 3.5rem 4rem 4.5rem;
+  }
+
+  /* ── Masthead ── */
+  .masthead {
+    border-bottom: 2.5px solid var(--ink);
+    padding-bottom: 1.8rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .journal-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 0.68rem;
+    font-family: 'Libre Baskerville', serif;
+    color: var(--ink-light);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 1.6rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .journal-name {
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    font-size: 0.72rem;
+  }
+
+  h1.title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 1.3rem;
+    letter-spacing: -0.01em;
+  }
+
+  .author-block {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    margin-bottom: 0.25rem;
+  }
+
+  .affil-block {
+    font-size: 0.72rem;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+
+  .pub-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    font-size: 0.69rem;
+    font-family: 'Libre Baskerville', serif;
+    color: var(--ink-light);
+    border-top: 1px solid var(--rule-light);
+    padding-top: 0.9rem;
+    margin-top: 0.9rem;
+    letter-spacing: 0.03em;
+  }
+
+  .pub-row span { display: flex; flex-direction: column; gap: 0.1rem; }
+  .pub-row .lbl { text-transform: uppercase; font-size: 0.58rem; letter-spacing: 0.1em; color: var(--ink-light); }
+  .pub-row .val { color: var(--ink-mid); }
+
+  /* ── Abstract ── */
+  .abstract {
+    border-left: 3px solid var(--accent);
+    background: var(--highlight);
+    padding: 1.2rem 1.5rem;
+    margin: 1.6rem 0 2rem;
+  }
+
+  .abstract-label {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.63rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  .abstract p {
+    font-size: 0.88rem;
+    line-height: 1.72;
+    color: var(--ink-mid);
+    text-indent: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .kw {
+    font-size: 0.73rem;
+    color: var(--ink-light);
+    font-family: 'Libre Baskerville', serif;
+    margin-top: 0.75rem;
+    font-style: italic;
+  }
+  .kw strong { font-style: normal; color: var(--ink-mid); }
+
+  /* ── Body ── */
+  h2.sh {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    margin: 2.2rem 0 0.75rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  h3.ssh {
+    font-family: 'Lora', serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink);
+    margin: 1.6rem 0 0.5rem;
+  }
+
+  p {
+    margin-bottom: 0.85rem;
+    text-align: justify;
+    hyphens: auto;
+    color: var(--ink);
+  }
+
+  p + p { text-indent: 1.4em; }
+  h2 + p, h3 + p, .abstract + p, .note + p { text-indent: 0; }
+
+  /* ── Inline figure / data box ── */
+  .fig {
+    border: 1px solid var(--rule);
+    background: var(--note-bg);
+    padding: 1rem 1.2rem;
+    margin: 1.8rem 0;
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+  }
+
+  .fig-label {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+
+  /* ── Data table ── */
+  .tw { margin: 1.8rem 0; overflow-x: auto; }
+
+  .tc {
+    font-size: 0.76rem;
+    font-family: 'Libre Baskerville', serif;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-bottom: 0.4rem;
+  }
+  .tc strong { font-style: normal; color: var(--ink-mid); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.79rem;
+    font-family: 'Libre Baskerville', serif;
+  }
+
+  thead tr {
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--ink-mid);
+  }
+  thead th {
+    padding: 0.45rem 0.65rem;
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.69rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-mid);
+  }
+
+  tbody tr { border-bottom: 1px solid var(--rule-light); }
+  tbody td { padding: 0.4rem 0.65rem; vertical-align: top; line-height: 1.5; }
+  tbody tr:last-child { border-bottom: 2px solid var(--ink); }
+  tbody tr:nth-child(odd) { background: #f7f4ed; }
+
+  /* ── Marginalia / footnote box ── */
+  .aside {
+    border: 1px solid var(--rule);
+    background: var(--note-bg);
+    padding: 0.9rem 1.1rem;
+    margin: 1.6rem 0;
+    font-size: 0.82rem;
+    color: var(--ink-light);
+    font-style: italic;
+    line-height: 1.65;
+  }
+
+  .aside .aside-lbl {
+    font-style: normal;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-soft);
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  /* ── References ── */
+  .refs ol {
+    padding-left: 1.4rem;
+    font-size: 0.79rem;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    font-family: 'Libre Baskerville', serif;
+  }
+  .refs ol li { margin-bottom: 0.5rem; }
+  .refs ol li em { font-style: italic; }
+
+  /* ── Acknowledgments ── */
+  .ack {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    font-family: 'Libre Baskerville', serif;
+    background: var(--note-bg);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 1rem 1.2rem;
+    margin: 2rem 0;
+    line-height: 1.65;
+  }
+
+  /* ── Correspondence box ── */
+  .corr {
+    font-size: 0.72rem;
+    font-family: 'Libre Baskerville', serif;
+    color: var(--ink-light);
+    text-align: center;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--rule-light);
+    margin-top: 1.5rem;
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  hr.rule { border: none; border-top: 1px solid var(--rule); margin: 2.2rem 0; }
+
+  /* ── Print bar ── */
+  .print-bar {
+    max-width: var(--max);
+    margin: 0 auto 0.8rem;
+    text-align: right;
+    padding: 0 0.5rem;
+  }
+  .print-btn {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    color: var(--ink-light);
+    font-size: 0.68rem;
+    font-family: 'Libre Baskerville', serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.38rem 0.9rem;
+    cursor: pointer;
+  }
+  .print-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .paper { padding: 2rem 1.5rem 3rem; margin: 1rem; }
+    h1.title { font-size: 1.2rem; }
+    .journal-line { flex-direction: column; gap: 0.25rem; }
+    .pub-row { gap: 0.9rem; }
+  }
+
+  @media print {
+    body { background: white; }
+    .paper { box-shadow: none; margin: 0; }
+    .fiction-bar, .top-bar, .print-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">Journal of World Prehistory &nbsp;·&nbsp; Vol. 35, No. 4, December 2022</div>
+<div class="fiction-bar">
+  This paper is a fictional artifact from the world of <em>The Recurrence Protocol</em> by John Taggart.
+  &nbsp;·&nbsp; <a href="#">Return to the novel</a>
+</div>
+
+<div class="print-bar">
+  <button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<div class="paper">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="journal-line">
+      <span class="journal-name">Journal of World Prehistory</span>
+      <span>Vol. 35 · No. 4 · pp. 291–334 · December 2022</span>
+    </div>
+
+    <h1 class="title">
+      Axis Orientation and Precessional Correspondence in Pre-Pottery Neolithic
+      Enclosure Architecture at Göbekli Tepe: A Measurement-Based Assessment
+    </h1>
+
+    <div class="author-block">Miriam Hale</div>
+    <div class="affil-block">
+      School of History, Classics and Archaeology, University of Edinburgh, Edinburgh EH8 9AG, United Kingdom<br>
+      Göbekli Tepe Excavation Project, Turkish Ministry of Culture and Tourism, Şanlıurfa, Turkey
+    </div>
+
+    <div class="pub-row">
+      <span><span class="lbl">Received</span><span class="val">March 14, 2022</span></span>
+      <span><span class="lbl">Accepted</span><span class="val">July 28, 2022</span></span>
+      <span><span class="lbl">Published</span><span class="val">December 1, 2022</span></span>
+      <span><span class="lbl">DOI</span><span class="val">10.1007/s10963-022-09178-4</span></span>
+      <span><span class="lbl">Access</span><span class="val">Subscription / Institutional</span></span>
+    </div>
+  </div>
+
+  <!-- ABSTRACT -->
+  <div class="abstract">
+    <div class="abstract-label">Abstract</div>
+    <p>
+      Renewed survey and systematic measurement of enclosure architecture at Göbekli Tepe (Şanlıurfa Province, Turkey) reveals a consistent axial orientation across six major enclosure complexes that corresponds, within a margin of 1.2°–2.8°, to a precessionally significant astronomical position observable in the night sky during the period 10,200–9,600 BCE. Total station survey data collected across five excavation seasons (2017–2022) establishes the primary axis of each enclosure as the line connecting the two largest T-shaped central pillars; this axis is not aligned to cardinal directions or to any contemporaneous solar or lunar rising/setting point, but is consistent across all six structures despite variation in their plan geometry and orientation within the broader site. The correspondence identified points toward the position of Deneb (α Cygni) as a circumpolar pole star candidate during the period of probable construction, a configuration produced by the slow wobble of Earth's axial precession over the 26,000-year cycle. A secondary analysis of pillar-spacing proportions across Enclosures A through D identifies a consistent architectural unit — here designated the Göbekli module — whose derivation from astronomical rather than purely practical considerations is suggested by its recurrence at proportional intervals inconsistent with standard building-material dimensions. Comparative orientation data from the Karahantepe enclosure complex, 35 km to the southeast, exhibits a similar axial correspondence. These findings do not resolve the question of intentionality — whether the builders oriented their structures with deliberate astronomical purpose or whether the correspondence is the product of shared conventions whose astronomical significance was incidental. They do, however, establish that the correspondence is real, measurable, and unlikely to be coincidental, and invite further investigation of the builders' capacity for systematic long-cycle observation.
+    </p>
+    <div class="kw"><strong>Keywords:</strong> Göbekli Tepe · Karahantepe · Pre-Pottery Neolithic · archaeoastronomy · enclosure orientation · axial precession · Deneb · T-pillar architecture · Göbekli module · lunar standstill</div>
+  </div>
+
+  <!-- BODY -->
+  <h2 class="sh">1. Introduction</h2>
+
+  <p>
+    The question of whether the builders of Göbekli Tepe possessed systematic astronomical knowledge has been raised periodically since the site's first major publications in the 1990s, and has accumulated a literature that ranges from careful methodology to speculation of varying degrees. This paper does not enter that debate at the level of interpretation. It enters it at the level of measurement, and it intends to remain there.
+  </p>
+  <p>
+    What motivated the present survey was not a prior commitment to any particular explanation for the enclosure architecture but a persistent discrepancy in the published orientation data. The enclosures at Göbekli Tepe are not aligned to cardinal directions. This has been noted by multiple excavation teams and is not contested. What has received less systematic attention is the question of what, precisely, they are aligned to — whether the axial directions produced by the central pillar pairs are random with respect to any external reference, or whether they converge on a consistent target. The present survey was undertaken to establish this empirically.
+  </p>
+  <p>
+    The short answer, which the data in Section 3 supports, is that they converge. The longer answer — what they converge on, how consistently, and what that consistency might mean — is the subject of this paper. The interpretive conclusions offered in Sections 4 and 5 are proportioned to the evidence and are framed with what I hope is appropriate restraint. Measurement is not interpretation. These enclosures point somewhere. Explaining why the builders pointed them there is a different problem, and one this paper does not presume to resolve.
+  </p>
+
+  <h2 class="sh">2. Methods</h2>
+
+  <h3 class="ssh">2.1 Site and Enclosure Selection</h3>
+  <p>
+    Göbekli Tepe (37°13′23″N, 38°55′21″E, elevation 760 m asl) has been under excavation since 1995. The present study focuses on Enclosures A, B, C, and D — the four most extensively excavated structures — together with two partially uncovered structures designated here as Enclosure E and Enclosure F, whose central pillar pairs are sufficiently exposed to permit axial determination. A seventh structure (Enclosure G) was excluded from the primary analysis due to insufficient exposure of the central pillars; its partial data is noted in Table 1 for reference.
+  </p>
+  <p>
+    Enclosure selection at Karahantepe was limited to two structures with clear central pillar configurations, designated KT-I and KT-II. The Karahantepe data should be considered preliminary; full survey of that site is ongoing and the values reported here will require revision as excavation continues.
+  </p>
+
+  <h3 class="ssh">2.2 Survey Methodology</h3>
+  <p>
+    All orientation measurements were taken using a Leica TS16 total station. Axial direction was determined by the line connecting the geometric centers of the two largest T-pillar bases in each enclosure's central pair. Where base stones were partially buried or disturbed, center positions were estimated from the visible exposure and flagged with elevated uncertainty values in the dataset. True north correction was applied using GPS azimuth observation at three established benchmark positions on the site plateau; seasonal drift was checked against the previous season's benchmark data at the start of each field season, and no measurable tectonic displacement was detected across the study period.
+  </p>
+  <p>
+    Astronomical correspondence analysis used the Stellarium planetarium software suite with the VSOP87 planetary theory for precession modeling, cross-checked against calculations from the JPL Horizons system. Sky positions were reconstructed at 200-year intervals from 11,000 BCE to 9,000 BCE, covering the likely window of initial construction based on radiocarbon chronology. All azimuth values reported below are true-north referenced and corrected for local horizon elevation.
+  </p>
+
+  <h3 class="ssh">2.3 Pillar-Spacing Analysis</h3>
+  <p>
+    Measurements of pillar spacing — defined as center-to-center distance between adjacent peripheral T-pillars within each enclosure — were recorded for all pillars whose bases were sufficiently exposed to permit reliable measurement. A total of 74 inter-pillar spans across the four main enclosures and 22 spans at Karahantepe were incorporated into the proportional analysis described in Section 3.3. Measurements were taken to the nearest centimeter; the spacing dataset is provided in full in the supplementary materials deposited with the journal.
+  </p>
+
+  <h2 class="sh">3. Results</h2>
+
+  <h3 class="ssh">3.1 Enclosure Axial Orientations</h3>
+  <p>
+    Table 1 presents the measured axial directions for all six primary enclosures, together with the Karahantepe comparison structures and the partial data for Enclosure G. The most immediate observation is the consistency of the values. Despite the enclosures' varying plan geometries — oval, elliptical, roughly circular — and their different positions across the site plateau, the central pillar axes converge within a 4.7° range, from 198.3° (Enclosure A) to 203.0° (Enclosure F). If the orientations were arbitrary with respect to an external reference, the probability of six independent structures falling within a 4.7° arc by chance is approximately 1 in 380.
+  </p>
+
+  <div class="tw">
+    <div class="tc"><strong>Table 1.</strong> Measured axial orientations of enclosure central pillar pairs at Göbekli Tepe and Karahantepe. Azimuth values are true-north referenced. Margin of error reflects total station precision combined with uncertainty in pillar center estimation where applicable. The Enclosure G value is excluded from statistical analysis due to limited pillar exposure.</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Enclosure</th>
+          <th>Site</th>
+          <th>Axis Azimuth (°)</th>
+          <th>±</th>
+          <th>Included in Analysis</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Enclosure A</td>
+          <td>Göbekli Tepe</td>
+          <td>198.3°</td>
+          <td>0.4°</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Enclosure B</td>
+          <td>Göbekli Tepe</td>
+          <td>200.1°</td>
+          <td>0.5°</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Enclosure C</td>
+          <td>Göbekli Tepe</td>
+          <td>199.6°</td>
+          <td>0.4°</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Enclosure D</td>
+          <td>Göbekli Tepe</td>
+          <td>201.2°</td>
+          <td>0.6°</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Enclosure E</td>
+          <td>Göbekli Tepe</td>
+          <td>200.8°</td>
+          <td>0.9°</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Enclosure F</td>
+          <td>Göbekli Tepe</td>
+          <td>203.0°</td>
+          <td>1.1°</td>
+          <td>Yes</td>
+        </tr>
+        <tr>
+          <td>Enclosure G</td>
+          <td>Göbekli Tepe</td>
+          <td>~200°</td>
+          <td>—</td>
+          <td>No (partial exposure)</td>
+        </tr>
+        <tr>
+          <td>KT-I</td>
+          <td>Karahantepe</td>
+          <td>199.1°</td>
+          <td>0.7°</td>
+          <td>Reference only</td>
+        </tr>
+        <tr>
+          <td>KT-II</td>
+          <td>Karahantepe</td>
+          <td>201.8°</td>
+          <td>1.2°</td>
+          <td>Reference only</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="ssh">3.2 Astronomical Correspondence: Deneb as Pole Star Candidate</h3>
+  <p>
+    The axial azimuth range of 198°–203° does not correspond to any solar or lunar rising or setting event at the site's latitude during the period 10,500–9,500 BCE. It is also inconsistent with the directions of the brightest stars as they would have appeared near the horizon during any season in this period. The astronomical feature it does correspond to is the circumpolar position of Deneb (α Cygni, apparent magnitude 1.25) as it approached its role as the northern pole star during the period approximately 10,200–9,800 BCE, a consequence of axial precession.
+  </p>
+  <p>
+    During this period, the Earth's axial wobble had carried the north celestial pole away from the modern vicinity of Polaris and toward the constellation Cygnus. Deneb's distance from the pole at its closest approach — approximately 7.4° in 10,000 BCE — is large enough that it would not have served as a precise pole marker, but it would have been the brightest star in close proximity to the pole and would have circled the northern sky in a tight arc visible on any clear night. An observer seeking a consistent directional reference for construction planning would have had strong practical reasons to use this arc's lowest point as their orientation marker.
+  </p>
+  <p>
+    The lower transit azimuth of Deneb at 10,000 BCE, from the Göbekli Tepe site, was approximately 200.4° — within 0.8° of the mean axis direction measured across the six primary enclosures (200.5°). This correspondence holds within the full uncertainty range of the survey measurements and within the probable uncertainty of construction-era sighting methods.
+  </p>
+
+  <div class="fig">
+    <div class="fig-label">Observational Note</div>
+    Deneb's role in this correspondence rests on precession, not on any unusual stellar property. At latitudes between 35° and 40°N, Deneb is circumpolar — it never sets — and during the epoch in question it traced the smallest circumpolar arc of any first-magnitude star. An observer watching the northern sky at any hour on any clear night would have seen it completing a circuit of approximately 14.8° around the pole position. The choice to use the arc's lower transit as a construction reference would have been practically straightforward: it is the point at which the star's azimuth is most stable and most easily transferred to a ground line. Whether the builders understood the precession cycle or simply used Deneb as a convenient north reference and planned to update their sightings periodically is not something the architecture alone can determine.
+  </div>
+
+  <h3 class="ssh">3.3 Pillar-Spacing Proportions: The Göbekli Module</h3>
+  <p>
+    Inspection of the inter-pillar spacing data reveals a consistent proportional unit running through the peripheral pillar arrangements of all four main enclosures. The unit — 93.6 cm, ±3.1 cm across all 74 measured spans — does not correspond to any standard anthropometric measure (forearm, pace, cubit or their multiples) within a reasonable tolerance. It does, however, recur with a regularity that suggests deliberate use as a module. Spans of approximately 93.6 cm, 187 cm (2×), and 281 cm (3×) appear across all four enclosures, with partial and half-module values (46.8 cm) occurring in pillar-to-wall transitions.
+  </p>
+  <p>
+    More tentatively: the module value of 93.6 cm bears a proportional relationship to the day-count of the lunar nodal cycle (6,793 days, approximately 18.6 years) that is not immediately explicable as coincidence. Expressing the nodal cycle in terms of the module — 6,793 ÷ 93.6 ≈ 72.6, within 0.8% of 72, a number with obvious base-six significance — suggests the possibility that the module was derived from a counting system calibrated to long-cycle astronomical observation. I note this relationship without claiming it as demonstrated, and without suggesting it as the primary explanation for the module's prevalence. Modular building systems have purely practical origins in many cultures, and the proportional coincidence may be exactly that. The data is presented here so that others may assess it.
+  </p>
+  <p>
+    The Karahantepe pillar-spacing data exhibits a similar module, though the current sample size (22 spans) is too small for confident characterization. Preliminary values suggest a Karahantepe module of approximately 94.1 cm, within the uncertainty range of the Göbekli value. If this similarity is confirmed by further excavation, it would strengthen the hypothesis that both sites used a shared measurement system derived from a common source, whether cultural or observational.
+  </p>
+
+  <h2 class="sh">4. Discussion</h2>
+
+  <h3 class="ssh">4.1 The Question of Intentionality</h3>
+  <p>
+    The correspondence between the enclosure axes and the lower transit of Deneb in approximately 10,000 BCE is, by the standards of archaeoastronomical evidence, unusually clean. The probability of six independent structures within a single site converging within 4.7° of a single azimuth by chance is low; the probability that this azimuth happens to correspond to a precessionally significant stellar position is lower still. Taken together, these facts constitute reasonable grounds for the hypothesis that the orientation was deliberate.
+  </p>
+  <p>
+    What they do not constitute is proof of intentionality in any strong sense. The builders may have been using Deneb as a directional reference without any awareness of precession — simply sighting on the closest bright star to north and constructing accordingly. Their successors, building the later enclosures, may have perpetuated the orientation as architectural convention without independent astronomical observation. The convergence of the axes may reflect a tradition of construction alignment rather than a recurrent act of celestial observation. All of these readings are consistent with the data.
+  </p>
+  <p>
+    The stronger interpretation — that the builders chose Deneb specifically because they understood something about its precessional significance, that they were encoding the current stellar configuration for reasons they expected to be meaningful across a long timescale — is not ruled out by the data, but it exceeds what the data can directly support. The gap between "they oriented toward this astronomical position" and "they understood why this position was significant and intended to encode that understanding" is large, and I am not in a position to close it here. I flag the gap not to dismiss the stronger interpretation but to be clear about what this paper establishes and what it does not.
+  </p>
+
+  <h3 class="ssh">4.2 Lunar Standstill Cycles and Long-Cycle Observation</h3>
+  <p>
+    The proportional coincidence noted in Section 3.3 — between the Göbekli module and the lunar nodal cycle — raises a question that, if pursued, would take this investigation well beyond its current scope. The lunar nodal cycle of approximately 18.6 years governs the extreme positions of moonrise and moonset, producing a cycle of "lunar standstills" that has been documented as an architectural reference at several later Neolithic monument sites, most thoroughly at Callanish in the Outer Hebrides. The suggestion that a similar awareness might have existed at Göbekli Tepe, 6,000–7,000 years earlier, would be a significant claim.
+  </p>
+  <p>
+    I raise it here for two reasons. First, because the proportional data invites the question and it would be evasive not to acknowledge that. Second, because the question is testable: if the Göbekli module is derived from a lunar standstill counting system, there should be evidence in the site's monument layout of long-cycle intervals — structures or marking systems that track a periodicity of approximately 18.6 or 37.2 years. Whether such evidence exists is something that the ongoing excavations at Göbekli Tepe and Karahantepe may eventually resolve. It is not something I can resolve with the current dataset, and I set it aside accordingly.
+  </p>
+  <p>
+    What can be said is that the question of long-cycle astronomical awareness at Göbekli Tepe is no longer purely speculative. The orientation data in Section 3 establishes that the builders were producing consistent axial alignments across multiple structures and across what was probably a significant span of construction time. Producing consistent alignments requires a repeatable sighting method. A repeatable sighting method requires a repeatable reference. In the period in question, the most stable circumpolar reference available at this latitude was the lower transit of Deneb. The builders appear to have used it. Whether they used it for one night's construction or for a program of astronomical observation spanning generations is the question that remains open.
+  </p>
+
+  <h3 class="ssh">4.3 Implications of the Karahantepe Comparison</h3>
+  <p>
+    The preliminary Karahantepe orientation data, if it holds under further measurement, substantially complicates the conventional account of Göbekli Tepe's architecture as a local phenomenon. Two sites 35 km apart, almost certainly not contemporaneous in their construction (current radiocarbon evidence suggests Karahantepe's primary construction period follows Göbekli Tepe's by at least several centuries), exhibiting the same axial orientation and what appears to be the same architectural module, would suggest a shared tradition of monument construction operating across a significant geographic area and a significant timespan.
+  </p>
+  <p>
+    A shared tradition of this kind — consistent orientation, consistent proportional system, operating across multiple sites and multiple generations — implies a form of systematic knowledge transmission that goes beyond what is typically attributed to pre-agricultural populations in this period. I note this implication without developing it, for the same reason I have noted others without developing them: the Karahantepe data is preliminary, and preliminary data has a way of becoming less clean as excavation continues. If the axial correspondence and module similarity are confirmed by full survey of the Karahantepe site, the implication will require careful attention. For now, it is recorded.
+  </p>
+
+  <div class="aside">
+    <div class="aside-lbl">A Note on Restraint</div>
+    Several colleagues who read drafts of this paper suggested that the findings, as presented, are more significant than the language used to describe them — that the measured correspondence is strong enough to warrant more direct interpretive conclusions. This may be true. I have chosen restraint not because I doubt the measurements but because I doubt my ability to fully characterize what an archaeologist should conclude from them without importing assumptions that the data does not require. The enclosures point somewhere consistent and astronomically specific. What the builders intended by pointing them there is a question I am not prepared to answer with confidence, and I would rather leave it open than close it prematurely. The data will remain after the paper.
+  </div>
+
+  <h2 class="sh">5. Conclusions</h2>
+
+  <p>
+    The enclosures at Göbekli Tepe are oriented consistently and non-randomly. Their primary axes converge within a 4.7° arc, centered on an azimuth of approximately 200.5°, which corresponds to the lower circumpolar transit of Deneb as it appeared in the period 10,200–9,600 BCE — the probable window of initial construction based on existing radiocarbon dates. The probability of this specific azimuth correspondence arising by chance is low. The most parsimonious explanation is that the builders used Deneb's circumpolar transit as a sighting reference and maintained this reference across the construction of multiple structures over an unknown but potentially extended period.
+  </p>
+  <p>
+    The pillar-spacing data suggests a consistent architectural module of approximately 93.6 cm whose derivation from purely anthropometric sources is unclear. A proportional relationship between this module value and the lunar nodal cycle period is noted but not claimed as demonstrated; it is recorded for the attention of researchers better positioned than the present author to assess its significance.
+  </p>
+  <p>
+    Preliminary comparison with Karahantepe orientation and spacing data suggests that both sites may share a common architectural tradition including axial orientation and proportional module. This comparison requires confirmation through full survey of the Karahantepe site, which is currently underway.
+  </p>
+  <p>
+    The question of whether the observed astronomical correspondences reflect deliberate encoding of long-cycle astronomical knowledge by the builders, or the perpetuation of a practical construction tradition whose astronomical origins were eventually forgotten, is not resolved by this study. It is, however, placed on a firmer empirical footing than it has previously occupied. The alignments are real. Their explanation is a problem for future work.
+  </p>
+
+  <hr class="rule">
+
+  <div class="ack">
+    <strong>Acknowledgments.</strong> Dr. Selim Arslan (Karahantepe and Göbekli Tepe Excavation Project) provided excavation access and site knowledge without which the Karahantepe comparison data could not have been collected; his patience with a visiting colleague who asked questions far outside the normal scope of architectural survey is gratefully acknowledged. The survey team in the 2021 and 2022 field seasons — particularly E. Çelik, whose precision with the total station exceeded what the equipment strictly required — is thanked for work that made the analysis possible. Funding support was provided by the School of History, Classics and Archaeology, University of Edinburgh, and by a Leverhulme Trust Research Grant (award RPG-2020-219). The Turkish Ministry of Culture and Tourism granted excavation and survey permission under permit number 2022-GT-144. Two anonymous peer reviewers provided criticisms that materially improved the argument; the remaining weaknesses are the author's own.
+  </div>
+
+  <h2 class="sh">References</h2>
+
+  <div class="refs">
+    <ol>
+      <li>Belmonte, J. A., &amp; Shaltout, M. (Eds.). (2009). <em>In Search of Cosmic Order: Selected Essays on Egyptian Archaeoastronomy</em>. Supreme Council of Antiquities Press.</li>
+      <li>Dietrich, O., Heun, M., Notroff, J., Schmidt, K., &amp; Zarnkow, M. (2012). The role of cult and feasting in the emergence of Neolithic communities: new evidence from Göbekli Tepe, south-eastern Turkey. <em>Antiquity</em>, 86(333), 674–695.</li>
+      <li>Dietrich, O., Köksal-Schmidt, Ç., Notroff, J., &amp; Schmidt, K. (2013). Establishing a radiocarbon sequence for Göbekli Tepe: state of research and new data. <em>Neo-Lithics</em>, 1(13), 36–41.</li>
+      <li>González-García, A. C., &amp; Belmonte, J. A. (2010). Statistical analysis of potential astronomical alignments at Göbekli Tepe. <em>Mediterranean Archaeology and Archaeometry</em>, 10(3), 57–65.</li>
+      <li>Hale, M. (2019). Architectural precision in Pre-Pottery Neolithic enclosure construction: total station survey of Göbekli Tepe Enclosures A–D. <em>Journal of Archaeological Science: Reports</em>, 26, 101880.</li>
+      <li>Hale, M., &amp; Arslan, S. (2021). Comparative enclosure geometry at Göbekli Tepe and Karahantepe: preliminary observations from the 2021 field season. <em>Archaeologisches Nachrichtenblatt</em>, 26(4), 318–327.</li>
+      <li>Hauptmann, H. (2011). The Urfa region. In M. Özdoğan, N. Başgelen, &amp; P. Kuniholm (Eds.), <em>The Neolithic in Turkey: New Excavations and New Research</em> (Vol. 2, pp. 85–138). Archaeology and Art Publications.</li>
+      <li>Magli, G. (2013). Sirius and the project of the megalithic enclosures at Göbekli Tepe. <em>Nexus Network Journal</em>, 15(3), 461–473.</li>
+      <li>Ruggles, C. L. N. (2015). Astronomy and stonehenge. In <em>Handbook of Archaeoastronomy and Ethnoastronomy</em> (pp. 1223–1238). Springer.</li>
+      <li>Schmidt, K. (2000). Göbekli Tepe, southeastern Turkey: a preliminary report on the 1995–1999 excavations. <em>Paléorient</em>, 26(1), 45–54.</li>
+      <li>Schmidt, K. (2012). <em>Göbekli Tepe: A Stone Age Sanctuary in South-Eastern Anatolia</em>. ex oriente.</li>
+      <li>Sweatman, M. B., &amp; Tsikritsis, D. (2017). Decoding Göbekli Tepe with archaeoastronomy: what does the fox say? <em>Mediterranean Archaeology and Archaeometry</em>, 17(1), 233–250.</li>
+      <li>Thom, A. (1971). <em>Megalithic Lunar Observatories</em>. Oxford University Press.</li>
+      <li>Towers, J., Card, N., Mainland, I., &amp; Downes, J. (2017). Orcadian connections: isotope analysis of the human remains from the Ness of Brodgar. <em>Journal of Archaeological Science: Reports</em>, 11, 352–363.</li>
+      <li>Towers, J., &amp; others. (2018). Lunar standstill and the Callanish monument complex: observational and architectural evidence reconsidered. <em>Journal of Archaeoastronomy</em>, 33(1), 44–67.</li>
+    </ol>
+  </div>
+
+  <div class="corr">
+    <em>Correspondence:</em> Miriam Hale, School of History, Classics and Archaeology,<br>
+    University of Edinburgh, Edinburgh EH8 9AG, United Kingdom.<br>
+    Email: m.hale@ed.ac.uk<br><br>
+    © Springer Science+Business Media, LLC, part of Springer Nature 2022.<br>
+    All rights reserved.
+  </div>
+
+</div><!-- /paper -->
+
+</body>
+</html>

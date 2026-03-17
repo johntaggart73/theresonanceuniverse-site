@@ -151,15 +151,27 @@
     .arch-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; line-height: 1.9; color: var(--text); margin-bottom: 20px; }
     .arch-text em { color: var(--white); font-style: italic; }
     .arch-diagram { max-width: 900px; margin: 0 auto; }
-    .arch-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: center; margin-bottom: 2px; }
-    .arch-node { background: var(--card); border: 1px solid var(--border); padding: 28px 32px; text-align: center; }
-    .arch-node.center { background: rgba(201,168,76,0.04); border-color: rgba(201,168,76,0.15); }
-    .arch-node-label { font-family: 'Raleway', sans-serif; font-size: 7px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
-    .arch-node-name { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 400; color: var(--white); letter-spacing: 2px; }
-    .arch-node.protocol .arch-node-name { color: var(--protocol); }
-    .arch-node.directive .arch-node-name { color: var(--directive); }
-    .arch-node.sequence .arch-node-name { color: var(--sequence); }
-    .arch-connector { width: 60px; height: 1px; background: linear-gradient(to right, var(--border), rgba(201,168,76,0.2), var(--border)); }
+
+    /* Triangle layout */
+    .arch-triangle { display: flex; flex-direction: column; gap: 0; }
+    .arch-tri-top { display: flex; justify-content: center; margin-bottom: 0; }
+    .arch-tri-connectors { width: 100%; max-width: 600px; margin: 0 auto; display: block; }
+    .arch-tri-connectors svg { width: 100%; height: auto; display: block; }
+    .arch-tri-middle { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2px; align-items: center; }
+    .arch-tri-node { background: var(--card); border: 1px solid var(--border); padding: 28px 32px; text-align: center; }
+    .arch-tri-label { font-family: 'Raleway', sans-serif; font-size: 7px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
+    .arch-tri-name { font-family: 'Cinzel', serif; font-size: 18px; font-weight: 400; letter-spacing: 2px; margin-bottom: 6px; }
+    .arch-tri-sub { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: var(--text-faint); }
+    .arch-tri-center { background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.2); padding: 32px 28px; text-align: center; }
+    .arch-tri-center-label { font-family: 'Raleway', sans-serif; font-size: 7px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); opacity: 0.5; margin-bottom: 8px; }
+    .arch-tri-center-name { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 400; color: var(--gold); letter-spacing: 3px; margin-bottom: 6px; }
+    .arch-tri-center-sub { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: var(--gold-dim); opacity: 0.6; }
+    .arch-tri-top .arch-tri-node { min-width: 260px; border-bottom: none; }
+
+    .arch-reader-bar { display: flex; align-items: center; gap: 20px; padding: 20px 0; margin-top: 2px; }
+    .arch-reader-rule { flex: 1; height: 1px; background: var(--border); }
+    .arch-reader-text { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; color: var(--text-faint); white-space: nowrap; }
+
     .arch-bottom { background: var(--card); border: 1px solid rgba(201,168,76,0.1); padding: 32px; text-align: center; margin-top: 2px; }
     .arch-bottom-text { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; font-style: italic; color: var(--text-dim); line-height: 1.7; }
     .arch-bottom-text em { color: var(--gold); font-style: normal; }
@@ -207,6 +219,24 @@
     .timeline-series-tag.directive { color: var(--directive); opacity: 0.6; }
     .timeline-series-tag.sequence { color: var(--sequence); opacity: 0.6; }
 
+    /* ── PAPERS ── */
+    .papers-section { padding: 120px 0; background: var(--deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .papers-intro { max-width: 640px; margin: 0 auto 60px; text-align: center; }
+    .papers-intro-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 300; font-style: italic; color: var(--text); line-height: 1.85; }
+    .papers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .paper-card { background: var(--card); border: 1px solid var(--border); padding: 44px 40px; text-decoration: none; display: flex; flex-direction: column; gap: 14px; transition: border-color 0.3s; position: relative; overflow: hidden; }
+    .paper-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--gold), transparent); opacity: 0; transition: opacity 0.3s; }
+    .paper-card:hover { border-color: rgba(201,168,76,0.2); }
+    .paper-card:hover::before { opacity: 1; }
+    .paper-card-journal { font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); opacity: 0.55; }
+    .paper-card-rule { width: 20px; height: 1px; background: var(--gold); opacity: 0.2; }
+    .paper-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--white); line-height: 1.35; }
+    .paper-card-authors { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; color: var(--gold-dim); opacity: 0.8; }
+    .paper-card-abstract { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--text-dim); flex: 1; }
+    .paper-card-series { font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: var(--protocol); opacity: 0.5; }
+    .paper-card-cta { font-family: 'Raleway', sans-serif; font-size: 8px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); opacity: 0.6; margin-top: 4px; }
+    .paper-card:hover .paper-card-cta { opacity: 1; }
+
     /* ── NEWSLETTER ── */
     .newsletter { padding: 100px 0; border-top: 1px solid var(--border); }
     .newsletter-inner { max-width: 540px; margin: 0 auto; padding: 0 48px; text-align: center; }
@@ -233,8 +263,13 @@
       .nav-links { gap: 16px; }
       .nav-links li:nth-child(n+3) { display: none; }
       .series-grid, .proto-grid { grid-template-columns: 1fr; }
+      .papers-grid { grid-template-columns: 1fr; }
       .arch-row { grid-template-columns: 1fr; }
       .arch-connector { display: none; }
+      .arch-tri-middle { grid-template-columns: 1fr; }
+      .arch-tri-top .arch-tri-node { min-width: unset; width: 100%; border-bottom: 1px solid var(--border); }
+      .arch-tri-connectors { display: none; }
+      .arch-reader-text { white-space: normal; text-align: center; }
       .timeline::before { left: 16px; }
       .timeline-item { grid-template-columns: 24px 1fr; }
       .timeline-content-left { display: none; }
@@ -418,31 +453,65 @@
         <p class="arch-text">Read any series alone and the story resolves completely. Read all three and the universe opens — because the reader is the only one who holds all three instruments simultaneously and understands that they are measuring the same event from three different angles.</p>
       </div>
       <div class="arch-diagram">
-        <div class="arch-row">
-          <div class="arch-node protocol">
-            <div class="arch-node-label">Series I · 2026–2027</div>
-            <div class="arch-node-name">Protocol</div>
+
+        <!-- Triangle diagram -->
+        <div class="arch-triangle">
+
+          <!-- Top — Protocol -->
+          <div class="arch-tri-top">
+            <div class="arch-tri-node protocol">
+              <div class="arch-tri-label">Series I &nbsp;·&nbsp; 2026–2027</div>
+              <div class="arch-tri-name" style="color:var(--protocol);">Protocol</div>
+              <div class="arch-tri-sub">Daniel Mercer · Houston</div>
+            </div>
           </div>
-          <div class="arch-connector"></div>
-          <div class="arch-node center">
-            <div class="arch-node-label">The Event</div>
-            <div class="arch-node-name" style="color:var(--gold);">The Signal</div>
+
+          <!-- SVG connectors -->
+          <div class="arch-tri-connectors">
+            <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              <!-- Left line: Protocol → Signal (top-left to center) -->
+              <line x1="150" y1="20" x2="300" y2="130" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+              <!-- Right line: Directive → Signal (top-right to center) -->
+              <line x1="450" y1="20" x2="300" y2="130" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+              <!-- Bottom line: Sequence → Signal (bottom to center) — drawn as horizontal from center down -->
+              <line x1="300" y1="130" x2="300" y2="160" stroke="rgba(201,168,76,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+              <!-- Center dot -->
+              <circle cx="300" cy="130" r="3" fill="rgba(201,168,76,0.4)"/>
+              <!-- Top-left dot -->
+              <circle cx="150" cy="20" r="2" fill="rgba(201,168,76,0.2)"/>
+              <!-- Top-right dot -->
+              <circle cx="450" cy="20" r="2" fill="rgba(201,168,76,0.2)"/>
+            </svg>
           </div>
-          <div class="arch-connector"></div>
-          <div class="arch-node directive">
-            <div class="arch-node-label">Series II · 2019–2025</div>
-            <div class="arch-node-name">Directive</div>
+
+          <!-- Middle row — Directive · Signal · Sequence label -->
+          <div class="arch-tri-middle">
+            <div class="arch-tri-node directive">
+              <div class="arch-tri-label">Series II &nbsp;·&nbsp; 2019–2025</div>
+              <div class="arch-tri-name" style="color:var(--directive);">Directive</div>
+              <div class="arch-tri-sub">Aimee Mercer · Savannah</div>
+            </div>
+            <div class="arch-tri-center">
+              <div class="arch-tri-center-label">The Event</div>
+              <div class="arch-tri-center-name">The Signal</div>
+              <div class="arch-tri-center-sub">Three instruments · One truth</div>
+            </div>
+            <div class="arch-tri-node sequence">
+              <div class="arch-tri-label">Series III &nbsp;·&nbsp; 2023–2029</div>
+              <div class="arch-tri-name" style="color:var(--sequence);">Sequence</div>
+              <div class="arch-tri-sub">Wren Fontaine · Vermont</div>
+            </div>
           </div>
+
         </div>
-        <div style="height:2px;"></div>
-        <div class="arch-row" style="justify-items:center;">
-          <div></div>
-          <div class="arch-node sequence" style="max-width:300px;width:100%;">
-            <div class="arch-node-label">Series III · 2023–2029</div>
-            <div class="arch-node-name">Sequence</div>
-          </div>
-          <div></div>
+
+        <!-- Reader line -->
+        <div class="arch-reader-bar">
+          <div class="arch-reader-rule"></div>
+          <div class="arch-reader-text">The reader is the only one who holds all three simultaneously</div>
+          <div class="arch-reader-rule"></div>
         </div>
+
         <div class="arch-bottom">
           <p class="arch-bottom-text">The full design only becomes visible when all three series are in hand. <em>The Terminal Protocol</em> — the final book — publishes last. For a reason.</p>
         </div>
@@ -661,6 +730,43 @@
             <div class="timeline-series-tag protocol" style="color:var(--gold);opacity:0.7;">The Connected Universe closes</div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAPERS -->
+  <section class="papers-section" id="papers">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-eyebrow">Primary Documents</span>
+        <h2 class="section-title">The Papers</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="papers-intro">
+        <p class="papers-intro-text">These are the academic papers referenced in the books. They are fiction. The science behind them is not. Each paper is formatted as it would appear in an actual peer-reviewed journal — because in the universe, it was.</p>
+      </div>
+      <div class="papers-grid">
+
+        <a href="papers/iqbal-hale-mercer-phase-coherence.html" class="paper-card">
+          <div class="paper-card-journal">Journal of Geophysical Research · Solid Earth</div>
+          <div class="paper-card-rule"></div>
+          <h3 class="paper-card-title">Phase Coherence in Global Atomic Timing Infrastructure</h3>
+          <div class="paper-card-authors">Iqbal · Hale · Mercer</div>
+          <p class="paper-card-abstract">The paper Daniel, Miriam, and the late Dr. Iqbal spent fourteen months writing. The one that changed everything. Published simultaneously to seven preprint servers at 4:47 a.m. from a mobile data connection with no relationship to the excavation network.</p>
+          <div class="paper-card-series">Protocol Series · The Recurrence Protocol</div>
+          <div class="paper-card-cta">Read the Paper →</div>
+        </a>
+
+        <a href="papers/hale-axis-orientation-gobekli-tepe.html" class="paper-card">
+          <div class="paper-card-journal">Journal of Archaeological Science · Reports</div>
+          <div class="paper-card-rule"></div>
+          <h3 class="paper-card-title">Axis Orientation and Precessional Correspondence at Göbekli Tepe</h3>
+          <div class="paper-card-authors">Hale, M.</div>
+          <p class="paper-card-abstract">Miriam Hale's earlier paper — the one that established her methodology and put her name on Daniel's radar. The geometry is documented. The implications are left, deliberately, as an exercise for the reader.</p>
+          <div class="paper-card-series">Protocol Series · Referenced in Book I</div>
+          <div class="paper-card-cta">Read the Paper →</div>
+        </a>
+
       </div>
     </div>
   </section>
