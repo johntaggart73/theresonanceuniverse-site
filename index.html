@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Resonance Universe — John W. Taggart</title>
+  <meta name="description" content="Three series. Twelve books. One architecture. The Resonance Universe by John W. Taggart." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --void:     #050508;
+      --black:    #07070c;
+      --deep:     #0a0a10;
+      --surface:  #0d0d14;
+      --card:     #111118;
+      --border:   #1a1a26;
+      --gold:     #c9a84c;
+      --gold-dim: #8a6e2e;
+      --gold-pale:#e8d08a;
+      --gold-faint:rgba(201,168,76,0.08);
+      --blue:     #4a7fa5;
+      --blue-dim: #2a4f6a;
+      --text:     #c0b8a8;
+      --text-dim: #6a6458;
+      --text-faint:#32302a;
+      --white:    #e8e2d8;
+      --protocol: #c9a84c;
+      --directive:#7a9e7e;
+      --sequence: #7a8eb8;
+    }
+    html { scroll-behavior: smooth; }
+    body { background-color: var(--void); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; line-height: 1.8; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 48px; background: linear-gradient(to bottom, rgba(5,5,8,0.99), transparent); }
+    .nav-logo { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 5px; color: var(--gold); text-decoration: none; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a { font-family: 'Raleway', sans-serif; font-size: 8px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 120px 40px 80px; overflow: hidden; }
+
+    /* Starfield */
+    .stars { position: absolute; inset: 0; overflow: hidden; }
+    .star { position: absolute; width: 1px; height: 1px; background: white; border-radius: 50%; animation: twinkle var(--d, 4s) ease-in-out infinite; opacity: var(--o, 0.3); }
+    @keyframes twinkle { 0%, 100% { opacity: var(--o, 0.3); } 50% { opacity: calc(var(--o, 0.3) * 2.5); } }
+
+    /* Frequency rings */
+    .freq-rings { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .freq-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(201,168,76,0.06); animation: ring-pulse var(--rd, 6s) ease-in-out infinite; }
+    @keyframes ring-pulse { 0%, 100% { transform: scale(1); opacity: 0.4; } 50% { transform: scale(1.02); opacity: 0.8; } }
+
+    .hero-eyebrow { font-family: 'Raleway', sans-serif; font-size: 8px; font-weight: 300; letter-spacing: 8px; text-transform: uppercase; color: var(--gold); opacity: 0.6; margin-bottom: 28px; animation: fade-up 1s ease both; }
+    .hero-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(36px, 6vw, 80px); font-weight: 400; color: var(--white); letter-spacing: 4px; line-height: 1.15; margin-bottom: 12px; animation: fade-up 1s ease 0.2s both; }
+    .hero-title span { color: var(--gold); display: block; }
+    .hero-rule { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--gold), transparent); margin: 0 auto 32px; opacity: 0.4; animation: grow-down 1.2s ease 0.4s both; }
+    @keyframes grow-down { from { height: 0; opacity: 0; } to { height: 60px; opacity: 0.4; } }
+    .hero-statement { font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 2.5vw, 26px); font-weight: 300; font-style: italic; color: var(--text); max-width: 640px; margin: 0 auto 16px; line-height: 1.7; animation: fade-up 1s ease 0.5s both; }
+    .hero-sub { font-family: 'Raleway', sans-serif; font-size: 8px; font-weight: 300; letter-spacing: 6px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 60px; animation: fade-up 1s ease 0.65s both; }
+
+    /* Three series pills */
+    .hero-series { display: flex; gap: 0; justify-content: center; margin-bottom: 48px; animation: fade-up 1s ease 0.8s both; }
+    .series-pill { padding: 10px 28px; border: 1px solid var(--border); font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; transition: all 0.3s; text-decoration: none; }
+    .series-pill:not(:last-child) { border-right: none; }
+    .series-pill.protocol { color: var(--protocol); }
+    .series-pill.directive { color: var(--directive); }
+    .series-pill.sequence { color: var(--sequence); }
+    .series-pill:hover { background: var(--gold-faint); }
+
+    .hero-cta { display: inline-block; font-family: 'Raleway', sans-serif; font-size: 8px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(201,168,76,0.3); padding: 14px 32px; text-decoration: none; transition: all 0.3s; animation: fade-up 1s ease 0.95s both; }
+    .hero-cta:hover { background: var(--gold-faint); border-color: var(--gold); }
+
+    .hero-scroll { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .hero-scroll span { font-family: 'Raleway', sans-serif; font-size: 7px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-faint); }
+    .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold-dim), transparent); animation: scroll-pulse 2s ease-in-out infinite; }
+    @keyframes scroll-pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+    @keyframes fade-up { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── SHARED ── */
+    section { position: relative; }
+    .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+    .section-header { text-align: center; margin-bottom: 72px; }
+    .section-eyebrow { font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 7px; text-transform: uppercase; color: var(--gold); opacity: 0.55; margin-bottom: 16px; display: block; }
+    .section-title { font-family: 'Cinzel', serif; font-size: clamp(22px, 3.5vw, 36px); font-weight: 400; color: var(--white); letter-spacing: 4px; }
+    .section-rule { width: 36px; height: 1px; background: var(--gold); margin: 18px auto 0; opacity: 0.25; }
+
+    /* ── THREE SERIES ── */
+    .series-section { padding: 120px 0; background: var(--deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .series-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .series-card { background: var(--card); padding: 56px 48px 48px; position: relative; overflow: hidden; transition: background 0.4s; }
+    .series-card:hover { background: #13131c; }
+    .series-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .series-card.protocol::before { background: linear-gradient(to right, var(--protocol), transparent); }
+    .series-card.directive::before { background: linear-gradient(to right, var(--directive), transparent); }
+    .series-card.sequence::before { background: linear-gradient(to right, var(--sequence), transparent); }
+    .series-number { font-family: 'Cinzel', serif; font-size: 80px; font-weight: 600; line-height: 1; margin-bottom: 20px; opacity: 0.05; }
+    .series-card.protocol .series-number { color: var(--protocol); }
+    .series-card.directive .series-number { color: var(--directive); }
+    .series-card.sequence .series-number { color: var(--sequence); }
+    .series-label { font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 12px; opacity: 0.6; }
+    .series-card.protocol .series-label { color: var(--protocol); }
+    .series-card.directive .series-label { color: var(--directive); }
+    .series-card.sequence .series-label { color: var(--sequence); }
+    .series-name { font-family: 'Cinzel', serif; font-size: clamp(18px, 2vw, 24px); font-weight: 400; color: var(--white); letter-spacing: 2px; line-height: 1.2; margin-bottom: 20px; }
+    .series-rule { width: 24px; height: 1px; margin-bottom: 20px; opacity: 0.3; }
+    .series-card.protocol .series-rule { background: var(--protocol); }
+    .series-card.directive .series-rule { background: var(--directive); }
+    .series-card.sequence .series-rule { background: var(--sequence); }
+    .series-tagline { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; font-style: italic; line-height: 1.75; color: var(--text-dim); margin-bottom: 24px; }
+    .series-meta { font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 32px; }
+    .series-link { display: inline-block; font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; text-decoration: none; padding: 10px 20px; border: 1px solid; transition: all 0.3s; }
+    .series-card.protocol .series-link { color: var(--protocol); border-color: rgba(201,168,76,0.2); }
+    .series-card.directive .series-link { color: var(--directive); border-color: rgba(122,158,126,0.2); }
+    .series-card.sequence .series-link { color: var(--sequence); border-color: rgba(122,142,184,0.2); }
+    .series-card.protocol .series-link:hover { background: rgba(201,168,76,0.06); border-color: var(--protocol); }
+    .series-card.directive .series-link:hover { background: rgba(122,158,126,0.06); border-color: var(--directive); }
+    .series-card.sequence .series-link:hover { background: rgba(122,142,184,0.06); border-color: var(--sequence); }
+
+    /* ── PROTAGONISTS ── */
+    .protagonists { padding: 120px 0; }
+    .proto-intro { text-align: center; max-width: 680px; margin: 0 auto 80px; }
+    .proto-intro-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; font-style: italic; color: var(--text); line-height: 1.85; }
+    .proto-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .proto-card { background: var(--card); border: 1px solid var(--border); overflow: hidden; transition: border-color 0.4s; }
+    .proto-card:hover { border-color: rgba(201,168,76,0.15); }
+    .proto-photo { position: relative; height: 420px; overflow: hidden; }
+    .proto-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; filter: grayscale(25%) contrast(1.05); transition: filter 0.5s; }
+    .proto-card:hover .proto-photo img { filter: grayscale(0%) contrast(1.05); }
+    .proto-photo::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to bottom, transparent, var(--card)); pointer-events: none; }
+    .proto-photo-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 24px; z-index: 1; }
+    .proto-series-badge { display: inline-block; font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; padding: 4px 10px; border: 1px solid; margin-bottom: 8px; }
+    .proto-card.protocol .proto-series-badge { color: var(--protocol); border-color: rgba(201,168,76,0.3); }
+    .proto-card.directive .proto-series-badge { color: var(--directive); border-color: rgba(122,158,126,0.3); }
+    .proto-card.sequence .proto-series-badge { color: var(--sequence); border-color: rgba(122,142,184,0.3); }
+    .proto-name { font-family: 'Cinzel', serif; font-size: 22px; font-weight: 400; color: var(--white); letter-spacing: 2px; }
+    .proto-info { padding: 28px 28px 36px; }
+    .proto-role { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-style: italic; color: var(--gold-dim); margin-bottom: 14px; opacity: 0.8; }
+    .proto-rule { width: 20px; height: 1px; background: var(--gold); opacity: 0.2; margin-bottom: 16px; }
+    .proto-bio { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 300; line-height: 1.85; color: var(--text-dim); margin-bottom: 20px; }
+    .proto-instrument { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); }
+    .instrument-label { font-family: 'Raleway', sans-serif; font-size: 7px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-faint); min-width: 64px; padding-top: 2px; flex-shrink: 0; }
+    .instrument-value { font-family: 'Cormorant Garamond', serif; font-size: 14px; color: var(--text-dim); line-height: 1.5; }
+
+    /* ── ARCHITECTURE ── */
+    .architecture { padding: 120px 0; background: var(--deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .arch-text-block { max-width: 760px; margin: 0 auto 80px; text-align: center; }
+    .arch-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; line-height: 1.9; color: var(--text); margin-bottom: 20px; }
+    .arch-text em { color: var(--white); font-style: italic; }
+    .arch-diagram { max-width: 900px; margin: 0 auto; }
+    .arch-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: center; margin-bottom: 2px; }
+    .arch-node { background: var(--card); border: 1px solid var(--border); padding: 28px 32px; text-align: center; }
+    .arch-node.center { background: rgba(201,168,76,0.04); border-color: rgba(201,168,76,0.15); }
+    .arch-node-label { font-family: 'Raleway', sans-serif; font-size: 7px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-faint); margin-bottom: 8px; }
+    .arch-node-name { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 400; color: var(--white); letter-spacing: 2px; }
+    .arch-node.protocol .arch-node-name { color: var(--protocol); }
+    .arch-node.directive .arch-node-name { color: var(--directive); }
+    .arch-node.sequence .arch-node-name { color: var(--sequence); }
+    .arch-connector { width: 60px; height: 1px; background: linear-gradient(to right, var(--border), rgba(201,168,76,0.2), var(--border)); }
+    .arch-bottom { background: var(--card); border: 1px solid rgba(201,168,76,0.1); padding: 32px; text-align: center; margin-top: 2px; }
+    .arch-bottom-text { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; font-style: italic; color: var(--text-dim); line-height: 1.7; }
+    .arch-bottom-text em { color: var(--gold); font-style: normal; }
+
+    /* ── BEHIND THE SCIENCE ── */
+    .science { padding: 120px 0; }
+    .science-intro { max-width: 680px; margin: 0 auto 80px; text-align: center; }
+    .science-intro-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 300; line-height: 1.85; color: var(--text); }
+    .science-categories { display: flex; flex-direction: column; gap: 2px; }
+    .science-category { background: var(--card); border: 1px solid var(--border); overflow: hidden; }
+    .science-cat-header { display: flex; align-items: center; gap: 20px; padding: 28px 36px; cursor: pointer; transition: background 0.3s; user-select: none; }
+    .science-cat-header:hover { background: rgba(255,255,255,0.02); }
+    .science-cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .science-cat-dot.shared { background: var(--gold); }
+    .science-cat-dot.protocol { background: var(--protocol); }
+    .science-cat-dot.directive { background: var(--directive); }
+    .science-cat-dot.sequence { background: var(--sequence); }
+    .science-cat-title { font-family: 'Cinzel', serif; font-size: 16px; font-weight: 400; color: var(--white); letter-spacing: 2px; flex: 1; }
+    .science-cat-count { font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: var(--text-faint); }
+    .science-cat-arrow { color: var(--text-faint); font-size: 10px; transition: transform 0.3s; }
+    .science-cat-body { display: none; padding: 0 36px 36px; }
+    .science-cat-body.open { display: block; }
+    .science-cat-arrow.open { transform: rotate(180deg); }
+    .science-entries { display: flex; flex-direction: column; gap: 0; }
+    .science-entry { border-top: 1px solid var(--border); padding: 28px 0; }
+    .science-entry-title { font-family: 'Cinzel', serif; font-size: 15px; font-weight: 400; color: var(--white); letter-spacing: 1px; margin-bottom: 6px; opacity: 0.85; }
+    .science-entry-real { font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); opacity: 0.5; margin-bottom: 14px; }
+    .science-entry-text { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; line-height: 1.85; color: var(--text-dim); }
+    .science-entry-fiction { margin-top: 14px; padding: 14px 18px; background: rgba(201,168,76,0.03); border-left: 2px solid rgba(201,168,76,0.15); font-family: 'Cormorant Garamond', serif; font-size: 15px; font-style: italic; color: var(--text-faint); line-height: 1.7; }
+
+    /* ── TIMELINE ── */
+    .timeline-section { padding: 120px 0; background: var(--deep); border-top: 1px solid var(--border); }
+    .timeline { max-width: 800px; margin: 0 auto; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent); opacity: 0.2; transform: translateX(-50%); }
+    .timeline-item { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0 32px; align-items: start; margin-bottom: 40px; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-content-left { text-align: right; padding-top: 4px; }
+    .timeline-content-right { text-align: left; padding-top: 4px; }
+    .timeline-content-empty { }
+    .timeline-dot { width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--gold); background: var(--void); margin-top: 6px; flex-shrink: 0; }
+    .timeline-year { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 4px; color: var(--gold); opacity: 0.7; margin-bottom: 6px; }
+    .timeline-event { font-family: 'Cormorant Garamond', serif; font-size: 15px; font-weight: 300; color: var(--text-dim); line-height: 1.6; }
+    .timeline-series-tag { font-family: 'Raleway', sans-serif; font-size: 7px; letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; }
+    .timeline-series-tag.protocol { color: var(--protocol); opacity: 0.6; }
+    .timeline-series-tag.directive { color: var(--directive); opacity: 0.6; }
+    .timeline-series-tag.sequence { color: var(--sequence); opacity: 0.6; }
+
+    /* ── NEWSLETTER ── */
+    .newsletter { padding: 100px 0; border-top: 1px solid var(--border); }
+    .newsletter-inner { max-width: 540px; margin: 0 auto; padding: 0 48px; text-align: center; }
+    .newsletter-title { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 400; color: var(--white); letter-spacing: 3px; margin-bottom: 14px; }
+    .newsletter-sub { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic; color: var(--text-dim); margin-bottom: 36px; line-height: 1.7; }
+    .newsletter-form { display: flex; }
+    .newsletter-input { flex: 1; background: var(--card); border: 1px solid var(--border); border-right: none; color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 16px; padding: 14px 18px; outline: none; transition: border-color 0.3s; }
+    .newsletter-input::placeholder { color: var(--text-faint); }
+    .newsletter-input:focus { border-color: rgba(201,168,76,0.25); }
+    .newsletter-btn { background: var(--gold); border: none; color: var(--black); font-family: 'Raleway', sans-serif; font-size: 8px; font-weight: 400; letter-spacing: 4px; text-transform: uppercase; padding: 14px 22px; cursor: pointer; transition: background 0.3s; white-space: nowrap; }
+    .newsletter-btn:hover { background: var(--gold-pale); }
+    .newsletter-note { font-family: 'Raleway', sans-serif; font-size: 7px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-faint); margin-top: 14px; }
+
+    /* ── FOOTER ── */
+    footer { padding: 40px 48px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-left { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: var(--text-faint); }
+    .footer-right { display: flex; gap: 28px; }
+    .footer-right a { font-family: 'Raleway', sans-serif; font-size: 7px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; color: var(--text-faint); text-decoration: none; transition: color 0.3s; }
+    .footer-right a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 16px; }
+      .nav-links li:nth-child(n+3) { display: none; }
+      .series-grid, .proto-grid { grid-template-columns: 1fr; }
+      .arch-row { grid-template-columns: 1fr; }
+      .arch-connector { display: none; }
+      .timeline::before { left: 16px; }
+      .timeline-item { grid-template-columns: 24px 1fr; }
+      .timeline-content-left { display: none; }
+      .timeline-content-empty { display: none; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-input { border-right: 1px solid var(--border); border-bottom: none; }
+      footer { flex-direction: column; text-align: center; padding: 28px 24px; }
+      .section-inner, .newsletter-inner { padding: 0 24px; }
+      .hero-series { flex-direction: column; align-items: center; }
+      .series-pill:not(:last-child) { border-right: 1px solid var(--border); border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="https://www.johnwtaggart.com" class="nav-logo">John W. Taggart</a>
+    <ul class="nav-links">
+      <li><a href="#series">The Series</a></li>
+      <li><a href="#protagonists">Characters</a></li>
+      <li><a href="#science">Behind the Science</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="stars" id="stars"></div>
+    <div class="freq-rings" id="rings"></div>
+
+    <p class="hero-eyebrow">John W. Taggart</p>
+    <h1 class="hero-title">
+      The Resonance
+      <span>Universe</span>
+    </h1>
+    <div class="hero-rule"></div>
+    <p class="hero-statement">Three series. Twelve books. Three protagonists who never meet — except in the reader, who holds all three simultaneously.</p>
+    <p class="hero-sub">The universe is not a metaphor. The science is real.</p>
+
+    <div class="hero-series">
+      <a href="https://www.theprotocolbooks.com" class="series-pill protocol">The Protocol Series</a>
+      <a href="#series" class="series-pill directive">The Directive Series</a>
+      <a href="#series" class="series-pill sequence">The Sequence Series</a>
+    </div>
+
+    <a href="#series" class="hero-cta">Enter the Universe</a>
+    <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- THREE SERIES -->
+  <section class="series-section" id="series">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-eyebrow">The Connected Universe</span>
+        <h2 class="section-title">Three Series</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="series-grid">
+
+        <div class="series-card protocol">
+          <div class="series-number">I</div>
+          <p class="series-label">Series One · Four Volumes</p>
+          <h3 class="series-name">The Protocol Series</h3>
+          <div class="series-rule"></div>
+          <p class="series-tagline">The signal was never a broadcast. It was a test. And someone just answered it.</p>
+          <p class="series-meta">Daniel Mercer · Houston · Orbital Mechanics · 2026–2027</p>
+          <a href="https://www.theprotocolbooks.com" class="series-link">Explore the Series →</a>
+        </div>
+
+        <div class="series-card directive">
+          <div class="series-number">II</div>
+          <p class="series-label">Series Two · Four Volumes</p>
+          <h3 class="series-name">The Directive Series</h3>
+          <div class="series-rule"></div>
+          <p class="series-tagline">The story she could reach was the largest of her career. The story underneath it was twelve thousand years old.</p>
+          <p class="series-meta">Aimee Mercer · Savannah · Electromagnetic Resonance · 2019–2025</p>
+          <a href="#" class="series-link">Coming Soon →</a>
+        </div>
+
+        <div class="series-card sequence">
+          <div class="series-number">III</div>
+          <p class="series-label">Series Three · Four Volumes</p>
+          <h3 class="series-name">The Sequence Series</h3>
+          <div class="series-rule"></div>
+          <p class="series-tagline">Someone built a machine to save the world. They didn't survive to see it work.</p>
+          <p class="series-meta">Wren Fontaine · Vermont · Piezoelectric Resonance · 2023–2029</p>
+          <a href="#" class="series-link">Coming Soon →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROTAGONISTS -->
+  <section class="protagonists" id="protagonists">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-eyebrow">Three Instruments · One Event</span>
+        <h2 class="section-title">The Protagonists</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="proto-intro">
+        <p class="proto-intro-text">Three investigators. Three disciplines. Three angles on the same hidden architecture. They never meet. They never compare notes. The reader is the only one who sees all three instruments pointed at the same thing — and understands that they are measuring the same event from three different directions.</p>
+      </div>
+      <div class="proto-grid">
+
+        <!-- Daniel -->
+        <div class="proto-card protocol">
+          <div class="proto-photo">
+            <img src="https://www.theprotocolbooks.com/daniel-mercer.jpg" alt="Daniel Mercer" />
+            <div class="proto-photo-label">
+              <span class="proto-series-badge">Protocol Series</span>
+              <div class="proto-name">Daniel Mercer</div>
+            </div>
+          </div>
+          <div class="proto-info">
+            <p class="proto-role">Orbital Analyst · Houston, Texas</p>
+            <div class="proto-rule"></div>
+            <p class="proto-bio">Forty-seven years old, precise, methodical, and most comfortable when the data is the only voice in the room. His back is an ongoing negotiation. He is constitutionally incapable of accepting a pattern he cannot explain. He doesn't chase the truth. He follows it, step by careful step, until there is no alternative interpretation left.</p>
+            <div class="proto-instrument">
+              <span class="instrument-label">Instrument</span>
+              <span class="instrument-value">Gravitational mechanics and atomic clock phase coherence</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aimee -->
+        <div class="proto-card directive">
+          <div class="proto-photo">
+            <img src="aimee-mercer.jpg" alt="Aimee Mercer" />
+            <div class="proto-photo-label">
+              <span class="proto-series-badge">Directive Series</span>
+              <div class="proto-name">Aimee Mercer</div>
+            </div>
+          </div>
+          <div class="proto-info">
+            <p class="proto-role">Investigative Journalist · Savannah, Georgia</p>
+            <div class="proto-rule"></div>
+            <p class="proto-bio">Pulitzer Prize winner. Daniel's older sister — no active contact at series start. Her OCD is never named; it is expressed through behavior. She reads everything three times before she moves. Her fatal flaw is that she works alone. It is also her armor. The story underneath the story she can reach is the one she never finds. Nobody in the Directive Series ever does. That is the rule.</p>
+            <div class="proto-instrument">
+              <span class="instrument-label">Instrument</span>
+              <span class="instrument-value">Thermal and electromagnetic effects at physical node sites</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wren -->
+        <div class="proto-card sequence">
+          <div class="proto-photo">
+            <img src="wren-fontaine.jpg" alt="Wren Fontaine" />
+            <div class="proto-photo-label">
+              <span class="proto-series-badge">Sequence Series</span>
+              <div class="proto-name">Wren Fontaine</div>
+            </div>
+          </div>
+          <div class="proto-info">
+            <p class="proto-role">Astrophysicist · University of Vermont</p>
+            <div class="proto-rule"></div>
+            <p class="proto-bio">Mid-thirties, Abenaki and French-Canadian. Her younger sister Lise died at thirteen — three government datasets that nobody connected. Wren cannot leave data unconnected. That is not a preference. It is the shape of her grief. Her precession geometry paper connects the mathematics of Earth's axial wobble to the positioning of eleven ancient stone sites — and lands on two desks within six hours of publication.</p>
+            <div class="proto-instrument">
+              <span class="instrument-label">Instrument</span>
+              <span class="instrument-value">Piezoelectric resonance, Schumann frequency, the planetary network</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section class="architecture" id="architecture">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-eyebrow">How It Fits Together</span>
+        <h2 class="section-title">The Architecture</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="arch-text-block">
+        <p class="arch-text">The three series registers never overlap in the hands of the characters. <em>Aimee</em> works in electromagnetic and thermal effects. <em>Wren</em> works in piezoelectricity and resonant frequencies. <em>Daniel</em> works in gravitational mechanics and atomic coherence. They are each reading a different instrument pointed at the same thing.</p>
+        <p class="arch-text">Read any series alone and the story resolves completely. Read all three and the universe opens — because the reader is the only one who holds all three instruments simultaneously and understands that they are measuring the same event from three different angles.</p>
+      </div>
+      <div class="arch-diagram">
+        <div class="arch-row">
+          <div class="arch-node protocol">
+            <div class="arch-node-label">Series I · 2026–2027</div>
+            <div class="arch-node-name">Protocol</div>
+          </div>
+          <div class="arch-connector"></div>
+          <div class="arch-node center">
+            <div class="arch-node-label">The Event</div>
+            <div class="arch-node-name" style="color:var(--gold);">The Signal</div>
+          </div>
+          <div class="arch-connector"></div>
+          <div class="arch-node directive">
+            <div class="arch-node-label">Series II · 2019–2025</div>
+            <div class="arch-node-name">Directive</div>
+          </div>
+        </div>
+        <div style="height:2px;"></div>
+        <div class="arch-row" style="justify-items:center;">
+          <div></div>
+          <div class="arch-node sequence" style="max-width:300px;width:100%;">
+            <div class="arch-node-label">Series III · 2023–2029</div>
+            <div class="arch-node-name">Sequence</div>
+          </div>
+          <div></div>
+        </div>
+        <div class="arch-bottom">
+          <p class="arch-bottom-text">The full design only becomes visible when all three series are in hand. <em>The Terminal Protocol</em> — the final book — publishes last. For a reason.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEHIND THE SCIENCE -->
+  <section class="science" id="science">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-eyebrow">The Real World Underneath the Fiction</span>
+        <h2 class="section-title">Behind the Science</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="science-intro">
+        <p class="science-intro-text">The science in the Resonance Universe is real. Not metaphor, not invention — documented, measurable, peer-reviewed. What the fiction does is ask what it means when you connect the data points that nobody has connected yet.</p>
+      </div>
+
+      <div class="science-categories">
+
+        <!-- SHARED FOUNDATION -->
+        <div class="science-category">
+          <div class="science-cat-header" onclick="toggleCat(this)">
+            <div class="science-cat-dot shared"></div>
+            <div class="science-cat-title">The Shared Foundation</div>
+            <div class="science-cat-count">4 entries · All three series</div>
+            <div class="science-cat-arrow">▼</div>
+          </div>
+          <div class="science-cat-body">
+            <div class="science-entries">
+              <div class="science-entry">
+                <div class="science-entry-title">The Schumann Resonance — 7.83 Hz</div>
+                <div class="science-entry-real">Confirmed · Physics / Neuroscience</div>
+                <p class="science-entry-text">Earth has an electromagnetic heartbeat. Generated continuously in the cavity between the planet's surface and the ionosphere, excited by lightning strikes happening somewhere on Earth at any given moment, it pulses at 7.83 Hz. You can measure it in any neuroscience lab on Earth. It also appears in human brain activity during certain meditative states — which is why it shows up in both hard physics and fringe science. The builders found it independently as a universal carrier frequency. And found something else riding it.</p>
+              </div>
+              <div class="science-entry">
+                <div class="science-entry-title">Geomagnetic Excursions</div>
+                <div class="science-entry-real">Confirmed · Geophysics</div>
+                <p class="science-entry-text">Earth's magnetic field is not stable over geological time. It weakens, shifts, and occasionally undergoes full polarity reversal. The Laschamps Excursion — 42,000 years ago — saw the field drop to roughly 6% of its current strength. The geomagnetic field is what protects life on the surface from solar radiation and cosmic rays. When it weakens, the consequences are serious. The field is currently weakening — measurably, documentably, right now. The South Atlantic Anomaly is the most visible symptom. This is not conspiracy. It is in every geophysics journal.</p>
+                <div class="science-entry-fiction">In the universe: the builders understood what a geomagnetic excursion meant and built something to address it. The Sequence Series follows the people who find out what they built.</div>
+              </div>
+              <div class="science-entry">
+                <div class="science-entry-title">Piezoelectricity</div>
+                <div class="science-entry-real">Confirmed · Materials Science</div>
+                <p class="science-entry-text">Certain crystals and rocks — quartz being the most common — generate an electrical charge when subjected to mechanical pressure. Ancient stone sites are frequently built on geology with high quartz content. The builders understood this and used it deliberately. The network nodes are sited at locations where the piezoelectric properties of the underlying geology are unusually strong — places where the stone itself generates electrical charge from the pressure of the rock above it.</p>
+              </div>
+              <div class="science-entry">
+                <div class="science-entry-title">Göbekli Tepe and Karahantepe</div>
+                <div class="science-entry-real">Confirmed · Archaeology</div>
+                <p class="science-entry-text">Twelve thousand years old. Predating agriculture, writing, and everything we thought we knew about when organized human civilization began. Deliberately buried — by the people who built them, for reasons we have not determined. The astronomical alignments at both sites are documented by multiple independent research teams. Neither site is fully excavated. Neither site is fully explained. Karahantepe, excavated from 2019 onward, has produced findings that continue to challenge the timeline of human cognitive and organizational development.</p>
+                <div class="science-entry-fiction">In the Protocol Series: Karahantepe is not a temple. It is a transmitter.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROTOCOL SCIENCE -->
+        <div class="science-category">
+          <div class="science-cat-header" onclick="toggleCat(this)">
+            <div class="science-cat-dot protocol"></div>
+            <div class="science-cat-title">The Protocol Series</div>
+            <div class="science-cat-count">3 entries · Gravitational mechanics · Atomic timekeeping</div>
+            <div class="science-cat-arrow">▼</div>
+          </div>
+          <div class="science-cat-body">
+            <div class="science-entries">
+              <div class="science-entry">
+                <div class="science-entry-title">Atomic Clock Network Synchronization</div>
+                <div class="science-entry-real">Confirmed · Physics / GPS Infrastructure</div>
+                <p class="science-entry-text">GPS satellites carry atomic clocks synchronized to within a billionth of a second. The entire global positioning system — and by extension, the financial, aviation, and communications infrastructure that depends on it — relies on this synchronization. Ground stations continuously monitor and correct for clock drift. The drift is normally random: thermal noise, quantum fluctuation. A drift that follows a pattern — coherent, repeating, synchronized across stations — would be detectable by someone who knew what to look for. It would also be something entirely outside the expected parameters of the system.</p>
+                <div class="science-entry-fiction">Daniel Mercer knows what to look for. He has been building the analytical framework for six months. At 2:14 a.m., the data shows him something the framework was not designed to find.</div>
+              </div>
+              <div class="science-entry">
+                <div class="science-entry-title">Gravitational Effects on Timekeeping</div>
+                <div class="science-entry-real">Confirmed · General Relativity</div>
+                <p class="science-entry-text">General relativity predicts — and atomic clocks confirm — that gravity affects the passage of time. Clocks at altitude run slightly faster than clocks at sea level. Clocks near large masses run slower. This is not theoretical: GPS satellites must account for relativistic time dilation or navigation errors would accumulate at roughly 10 kilometers per day. The anomaly Daniel detects is in the coherence pattern — the way multiple clocks drift in synchronized relationship to each other — rather than in absolute time. The pattern is gravitational in origin. Something with mass is producing it.</p>
+              </div>
+              <div class="science-entry">
+                <div class="science-entry-title">Ancient Texts as Technical Documents</div>
+                <div class="science-entry-real">Interpretive · Ancient History / Religious Studies</div>
+                <p class="science-entry-text">The Book of Enoch, Genesis, Revelation, the Sumerian Anunnaki accounts. Scholars debate their origins, their transmission, their relationship to historical events. What they share is a consistent description of non-human intelligences interacting with humans, transmitting knowledge, and departing — with the implication that they would return. The theological overlay is the language of people who witnessed something and had no technical vocabulary for it. The observations underneath the theology are consistent across cultures separated by geography and time.</p>
+                <div class="science-entry-fiction">In the universe: the observations are correct. The interpretation is not. Revelation is a technical description of an information transfer, written by a witness who had no vocabulary for what he experienced at that scale.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DIRECTIVE SCIENCE -->
+        <div class="science-category">
+          <div class="science-cat-header" onclick="toggleCat(this)">
+            <div class="science-cat-dot directive"></div>
+            <div class="science-cat-title">The Directive Series</div>
+            <div class="science-cat-count">3 entries · Electromagnetic resonance · Tesla · The Philadelphia Experiment</div>
+            <div class="science-cat-arrow">▼</div>
+          </div>
+          <div class="science-cat-body">
+            <div class="science-entries">
+              <div class="science-entry">
+                <div class="science-entry-title">Tesla's Detection of 7.83 Hz</div>
+                <div class="science-entry-real">Historically documented · Colorado Springs, 1899</div>
+                <p class="science-entry-text">Nikola Tesla detected the 7.83 Hz resonance frequency at his Colorado Springs laboratory in 1899 — more than fifty years before physicist Winfried Otto Schumann formally catalogued it in 1952. Tesla believed he had detected a signal from elsewhere. He spent the rest of his life attempting to build Wardenclyffe — a transmission tower capable of broadcasting on that frequency at planetary scale. The tower was never completed. His papers were seized by the U.S. government at his death in 1943. Wardenclyffe was demolished in 1917 after J.P. Morgan withdrew funding.</p>
+                <div class="science-entry-fiction">In the universe: the DoE program finished what Tesla started, using a node site that made planetary-scale transmission viable. The Directive Series follows the person who finds out what the program actually transmitted — and what it disturbed.</div>
+              </div>
+              <div class="science-entry">
+                <div class="science-entry-title">Electromagnetic Resonance and Thermal Effects</div>
+                <div class="science-entry-real">Confirmed · Physics / Environmental Science</div>
+                <p class="science-entry-text">When electromagnetic energy is transmitted at specific frequencies, it interacts with the properties of the surrounding matter — including geology, ice, and water. High-power transmission at the Schumann resonance frequency generates thermal effects in dense matter. The Antarctic ice sheet sits above geological formations with specific electromagnetic properties. Sustained transmission at sufficient power, from a site chosen for its geological characteristics, would generate measurable heat in the surrounding ice over time. The ice melt consequences are calculable. They were calculated.</p>
+                <div class="science-entry-fiction">The DoE report documenting the thermal effects was written in 2004. It was classified above the glaciologist's clearance before she could act on it.</div>
+              </div>
+              <div class="science-entry">
+                <div class="science-entry-title">The Philadelphia Experiment</div>
+                <div class="science-entry-real">Documented claim · USS Eldridge, October 1943</div>
+                <p class="science-entry-text">In October 1943, the USS Eldridge underwent Navy degaussing experiments in the Philadelphia Naval Shipyard. Degaussing — wrapping a ship's hull in electromagnetic coils to neutralize its magnetic signature and protect against magnetic mines — was standard wartime procedure. The mythology of teleportation and invisibility grew around these experiments in the decades that followed, fueled by inconsistencies in official records and witness accounts. The experiments coincided with the period when Tesla's seized papers were being reviewed by government engineers.</p>
+                <div class="science-entry-fiction">In the universe: the ship did not teleport. The engineers, working from Tesla's papers, generated eleven seconds of transmission at the Schumann frequency using the ship's degaussing cables as an antenna array. The network registered it. Something responded. That is the thing the mythology grew around.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEQUENCE SCIENCE -->
+        <div class="science-category">
+          <div class="science-cat-header" onclick="toggleCat(this)">
+            <div class="science-cat-dot sequence"></div>
+            <div class="science-cat-title">The Sequence Series</div>
+            <div class="science-cat-count">3 entries · Precession · Acoustic resonance · Planetary defense</div>
+            <div class="science-cat-arrow">▼</div>
+          </div>
+          <div class="science-cat-body">
+            <div class="science-entries">
+              <div class="science-entry">
+                <div class="science-entry-title">Precession of the Equinoxes</div>
+                <div class="science-entry-real">Confirmed · Astronomy</div>
+                <p class="science-entry-text">Earth wobbles on its axis over a 26,000-year cycle — a slow, predictable gyroscopic motion caused by the gravitational pull of the sun and moon on Earth's equatorial bulge. This precession changes which stars appear at which positions in the sky over millennia, which means ancient astronomical alignments encoded in stone structures shift over time in mathematically calculable ways. A stone circle aligned to a specific star's rising position today was aligned differently 5,000 years ago. The mathematics is precise enough to date ancient structures by their astronomical alignments.</p>
+                <div class="science-entry-fiction">Wren's paper connects precession mathematics to the positioning of eleven ancient sites distributed across the globe. The geometry is not random. Someone chose these locations knowing where they would be pointing in 12,000 years.</div>
+              </div>
+              <div class="science-entry">
+                <div class="science-entry-title">Acoustic Resonance at Megalithic Sites</div>
+                <div class="science-entry-real">Documented · Archaeoacoustics</div>
+                <p class="science-entry-text">Researchers studying ancient stone sites have documented that many megalithic chambers resonate at specific frequencies when sound is introduced — standing wave patterns that concentrate acoustic energy in predictable ways. This is not accidental. The geometry of the chambers, the dimensions of the stones, the positioning of openings: these are engineering decisions. The acoustic properties are consistent across sites separated by thousands of miles and thousands of years. Some researchers have documented resonance frequencies that correspond to altered states of human consciousness. Others have noted that the resonant frequencies interact with the piezoelectric properties of the underlying geology.</p>
+              </div>
+              <div class="science-entry">
+                <div class="science-entry-title">The Planetary Defense Network</div>
+                <div class="science-entry-real">Theoretical · Geophysics / Ancient Engineering</div>
+                <p class="science-entry-text">The geomagnetic field weakens during an excursion event. At 6% of normal strength, the surface is exposed to solar radiation and cosmic ray flux at levels that produce measurable biological effects. A network of installations at specific geological locations — chosen for piezoelectric properties and geomagnetic characteristics — capable of generating a stabilizing electromagnetic field when activated in sequence would function as a planetary pacemaker. The Laschamps Excursion 42,000 years ago is when such a system would first have been needed. The evidence in the ice cores suggests something intervened in ways that standard models do not fully account for.</p>
+                <div class="science-entry-fiction">The builders did not build temples. They built infrastructure. The Sequence Series is about the people who figure out how to turn it back on.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section" id="timeline">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="section-eyebrow">The Chronology</span>
+        <h2 class="section-title">The Timeline</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content-left">
+            <div class="timeline-year">2019</div>
+            <div class="timeline-event">Aimee Mercer begins investigating anomalous electromagnetic readings at an Antarctic research station.</div>
+            <div class="timeline-series-tag directive">Directive Series begins</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content-empty"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content-empty"></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content-right">
+            <div class="timeline-year">2023</div>
+            <div class="timeline-event">Wren Fontaine publishes her precession geometry paper. It lands on two desks within six hours.</div>
+            <div class="timeline-series-tag sequence">Sequence Series begins</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content-left">
+            <div class="timeline-year">2026</div>
+            <div class="timeline-event">Daniel Mercer detects an anomalous coherence pattern in the GPS atomic clock network at 2:14 a.m.</div>
+            <div class="timeline-series-tag protocol">Protocol Series begins</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content-empty"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content-empty"></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content-right">
+            <div class="timeline-year">2027</div>
+            <div class="timeline-event">The phase coherence event. Seventeen cities. Forty-two GPS deviation events in one hour. The paper publishes.</div>
+            <div class="timeline-series-tag protocol">Protocol Series · Books 1–2</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content-left">
+            <div class="timeline-year">2028–29</div>
+            <div class="timeline-event">The Sequence team locates and begins activation of the eleven node network. The planetary defense system wakes.</div>
+            <div class="timeline-series-tag sequence">Sequence Series · Books 3–4</div>
+          </div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content-empty"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content-empty"></div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content-right">
+            <div class="timeline-year">2031</div>
+            <div class="timeline-event">The Terminal Protocol. The last book publishes last. For a reason.</div>
+            <div class="timeline-series-tag protocol" style="color:var(--gold);opacity:0.7;">The Connected Universe closes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="newsletter-inner">
+      <span class="section-eyebrow" style="display:block;margin-bottom:16px;">Stay in the Signal</span>
+      <h2 class="newsletter-title">Get Universe Updates</h2>
+      <p class="newsletter-sub">New releases, science dispatches, and the occasional look behind the architecture. No noise.</p>
+      <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+        <input type="email" class="newsletter-input" placeholder="Your email address" id="nl-email" required />
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+      <p class="newsletter-note" id="nl-msg">No spam. Unsubscribe anytime.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-left">The Resonance Universe &nbsp;·&nbsp; John W. Taggart</div>
+    <div class="footer-right">
+      <a href="https://www.johnwtaggart.com">Author Site</a>
+      <a href="https://www.theprotocolbooks.com">Protocol Series</a>
+      <a href="https://a.co/d/06tgzZIH" target="_blank">Amazon</a>
+    </div>
+  </footer>
+
+  <script>
+    // Starfield
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 180; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--o:${0.1+Math.random()*0.5};--d:${3+Math.random()*6}s;animation-delay:${Math.random()*6}s;`;
+      if (Math.random() > 0.85) { s.style.width = '2px'; s.style.height = '2px'; }
+      starsEl.appendChild(s);
+    }
+
+    // Frequency rings
+    const ringsEl = document.getElementById('rings');
+    const sizes = [300, 500, 720, 960, 1200, 1500];
+    sizes.forEach((size, i) => {
+      const r = document.createElement('div');
+      r.className = 'freq-ring';
+      r.style.cssText = `width:${size}px;height:${size}px;--rd:${5+i*1.5}s;animation-delay:${i*0.8}s;`;
+      ringsEl.appendChild(r);
+    });
+
+    // Science accordion
+    function toggleCat(header) {
+      const body = header.nextElementSibling;
+      const arrow = header.querySelector('.science-cat-arrow');
+      const isOpen = body.classList.contains('open');
+      document.querySelectorAll('.science-cat-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.science-cat-arrow').forEach(a => a.classList.remove('open'));
+      if (!isOpen) { body.classList.add('open'); arrow.classList.add('open'); }
+    }
+
+    // Newsletter
+    async function handleSubscribe(e) {
+      e.preventDefault();
+      const email = document.getElementById('nl-email').value;
+      const msg = document.getElementById('nl-msg');
+      try {
+        const res = await fetch('https://connect.mailerlite.com/api/subscribers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer YOUR_MAILERLITE_API_TOKEN' },
+          body: JSON.stringify({ email, groups: ['181820865412859816'] })
+        });
+        if (res.ok) { msg.textContent = "You're in. Welcome to the universe."; msg.style.color = '#c9a84c'; document.getElementById('nl-email').value = ''; }
+        else { msg.textContent = 'Something went wrong. Try again.'; }
+      } catch { msg.textContent = 'Something went wrong. Try again.'; }
+    }
+  </script>
+</body>
+</html>
