@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phase Coherence in Global Atomic Timing Infrastructure — Iqbal et al.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #faf8f4;
+    --ink: #1a1a18;
+    --ink-light: #3d3d38;
+    --rule: #c8c0b0;
+    --accent: #8b1a1a;
+    --accent-light: #c44;
+    --sidebar: #f0ede6;
+    --note-bg: #f5f2eb;
+    --note-border: #b8a88a;
+    --max-width: 820px;
+    --col-gap: 2.4rem;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; scroll-behavior: smooth; }
+
+  body {
+    background: #e8e4dc;
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Journal masthead ── */
+  .journal-bar {
+    background: var(--accent);
+    color: #fff;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 300;
+  }
+
+  .fiction-notice {
+    background: #1a1a18;
+    color: #d4c8a8;
+    text-align: center;
+    padding: 0.65rem 2rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+  }
+  .fiction-notice a { color: #c8a85a; text-decoration: underline; }
+
+  /* ── Paper container ── */
+  .paper {
+    max-width: var(--max-width);
+    margin: 2.5rem auto 4rem;
+    background: var(--paper);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.22), 0 1px 6px rgba(0,0,0,0.12);
+    padding: 4rem 4.5rem 5rem;
+  }
+
+  /* ── Header ── */
+  .paper-header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .journal-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-light);
+    font-family: 'Source Serif 4', serif;
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .doi-block {
+    font-size: 0.7rem;
+    color: var(--ink-light);
+    font-family: 'Source Serif 4', serif;
+  }
+
+  h1.paper-title {
+    font-size: 1.7rem;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 1.4rem;
+    font-family: 'Source Serif 4', serif;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .running-head {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-light);
+    font-family: 'Source Serif 4', serif;
+    margin-bottom: 0.5rem;
+  }
+
+  .authors {
+    font-size: 1rem;
+    color: var(--ink-light);
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+  }
+
+  .authors sup {
+    font-size: 0.6em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .affiliations {
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    margin-top: 0.9rem;
+    line-height: 1.7;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  .affiliations sup {
+    font-size: 0.65em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .affiliations .deceased {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .dates-row {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.72rem;
+    color: var(--ink-light);
+    font-family: 'Source Serif 4', serif;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .dates-row span { display: flex; flex-direction: column; gap: 0.1rem; }
+  .dates-row .label { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.62rem; }
+
+  /* ── Abstract ── */
+  .abstract-box {
+    background: var(--note-bg);
+    border-left: 3px solid var(--accent);
+    padding: 1.4rem 1.6rem;
+    margin: 2rem 0;
+  }
+
+  .abstract-box h2 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+    color: var(--accent);
+  }
+
+  .abstract-box p {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--ink-light);
+  }
+
+  .keywords {
+    font-size: 0.78rem;
+    margin-top: 0.8rem;
+    color: var(--ink-light);
+    font-family: 'Source Serif 4', serif;
+  }
+  .keywords strong { color: var(--ink); }
+
+  /* ── Body content ── */
+  .paper-body { padding-top: 1rem; }
+
+  h2.section-head {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.0rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 2.4rem 0 0.9rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+  }
+
+  h3.subsection-head {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    font-style: italic;
+    margin: 1.6rem 0 0.6rem;
+    color: var(--ink);
+  }
+
+  p {
+    margin-bottom: 0.95rem;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  p + p { text-indent: 1.3em; }
+  h2 + p, h3 + p, .abstract-box + p { text-indent: 0; }
+
+  /* ── Table ── */
+  .table-wrap {
+    margin: 1.8rem 0;
+    overflow-x: auto;
+  }
+
+  .table-caption {
+    font-size: 0.8rem;
+    font-family: 'Source Serif 4', serif;
+    color: var(--ink-light);
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+  .table-caption strong { font-style: normal; color: var(--ink); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  thead tr {
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+
+  thead th {
+    padding: 0.5rem 0.7rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  tbody tr { border-bottom: 1px solid var(--rule); }
+  tbody td { padding: 0.45rem 0.7rem; vertical-align: top; }
+  tbody tr:last-child { border-bottom: 2px solid var(--ink); }
+  tbody tr:nth-child(even) { background: #f0ede6; }
+
+  /* ── Pull quote / note box ── */
+  .note-box {
+    border: 1px solid var(--note-border);
+    background: var(--note-bg);
+    padding: 1.1rem 1.3rem;
+    margin: 1.8rem 0;
+    font-size: 0.88rem;
+    color: var(--ink-light);
+  }
+
+  .note-box .note-label {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  /* ── References ── */
+  .references ol {
+    padding-left: 1.5rem;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--ink-light);
+    font-family: 'Source Serif 4', serif;
+  }
+
+  .references ol li {
+    margin-bottom: 0.55rem;
+  }
+
+  .references ol li em { font-style: italic; }
+
+  /* ── Acknowledgments ── */
+  .ack {
+    font-size: 0.83rem;
+    color: var(--ink-light);
+    font-family: 'Source Serif 4', serif;
+    background: var(--note-bg);
+    padding: 1rem 1.3rem;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin: 2rem 0;
+    line-height: 1.65;
+  }
+
+  /* ── Footnote marker in text ── */
+  .fn { font-size: 0.65em; vertical-align: super; color: var(--accent); }
+
+  /* ── Separator ── */
+  hr.section-rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 2.5rem 0;
+  }
+
+  /* ── Print button ── */
+  .print-bar {
+    max-width: var(--max-width);
+    margin: 0 auto 1rem;
+    text-align: right;
+    padding: 0 0.5rem;
+  }
+
+  .print-btn {
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--ink-light);
+    font-size: 0.72rem;
+    font-family: 'Source Serif 4', serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    background: var(--paper);
+  }
+
+  .print-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── Responsive ── */
+  @media (max-width: 680px) {
+    .paper { padding: 2rem 1.6rem 3rem; }
+    h1.paper-title { font-size: 1.35rem; }
+    .journal-meta { flex-direction: column; gap: 0.3rem; }
+    .dates-row { flex-direction: column; gap: 0.8rem; }
+    .paper { margin: 1rem; }
+  }
+
+  @media print {
+    body { background: white; }
+    .paper { box-shadow: none; margin: 0; }
+    .fiction-notice, .journal-bar, .print-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="journal-bar">
+  Published concurrently in Nature Geoscience &nbsp;·&nbsp; Journal of Archaeological Science &nbsp;·&nbsp; Metrologia
+</div>
+
+<div class="fiction-notice">
+  This paper is a fictional artifact created for <em>The Recurrence Protocol</em> by John Taggart. It depicts events within the world of the novel.
+  &nbsp;·&nbsp; <a href="#">Return to the novel</a>
+</div>
+
+<div class="print-bar">
+  <button class="print-btn" onclick="window.print()">⬡ Print / Save PDF</button>
+</div>
+
+<div class="paper">
+
+  <!-- HEADER -->
+  <div class="paper-header">
+    <div class="journal-meta">
+      <span>Vol. 19 &nbsp;·&nbsp; 2026</span>
+      <span>Article 0047 &nbsp;·&nbsp; Concurrent Multi-Journal Publication</span>
+      <span>Open Access</span>
+    </div>
+
+    <div class="running-head">Archaeoastronomical Research / Precision Timing / Geophysics</div>
+
+    <h1 class="paper-title">
+      Phase Coherence in Global Atomic Timing Infrastructure and Deliberate
+      Pre-Pottery Neolithic Encoding: Documentation of a Terminal Baseline
+      Correction Event
+    </h1>
+
+    <div class="authors">
+      Thomas Iqbal<sup>†1</sup>, Miriam Hale<sup>2</sup>, Daniel Mercer<sup>3</sup>,
+      Selim Arslan<sup>4</sup>, Giancarlo Benedetti<sup>5</sup>, Yusuf Acar<sup>6</sup>
+    </div>
+
+    <div class="affiliations">
+      <sup>†</sup><span class="deceased">Deceased. This paper is submitted in memory of Thomas Iqbal, whose foundational research made the investigation possible.</span><br>
+      <sup>1</sup> Department of Astrophysics and Geophysics, ETH Zürich, Switzerland<br>
+      <sup>2</sup> School of History, Classics and Archaeology, University of Edinburgh, UK<br>
+      <sup>3</sup> Orbital Mechanics and Precision Navigation Division, NASA Johnson Space Center, Houston, TX, USA<br>
+      <sup>4</sup> Karahantepe and Göbekli Tepe Excavation Project, Turkish Ministry of Culture and Tourism, Şanlıurfa, Turkey<br>
+      <sup>5</sup> Pontifical Institute of Sacred Archaeology, Vatican City State<br>
+      <sup>6</sup> Meridian Cultural Advisory Group Research Foundation, Geneva, Switzerland
+    </div>
+
+    <div class="dates-row">
+      <span><span class="label">Received</span>February 4, 2026</span>
+      <span><span class="label">Accepted</span>February 18, 2026</span>
+      <span><span class="label">Published</span>March 3, 2026</span>
+      <span><span class="label">DOI</span>10.1038/s41561-026-0047-x</span>
+    </div>
+  </div>
+
+  <!-- ABSTRACT -->
+  <div class="abstract-box">
+    <h2>Abstract</h2>
+    <p>
+      We report the discovery and analysis of a globally distributed network of forty-one Pre-Pottery Neolithic archaeological sites that encode a consistent harmonic ratio — hereafter the Karahantepe unit, designated 84:42 — within their architectural proportions and monument orientations. Cross-referencing this ratio against declassified records of anomalous phase coherence in distributed atomic timing infrastructure reveals a temporal correspondence spanning at least seven documented events between approximately 9600 BCE and the present. The most recent of these events, occurring January 11–17, 2026, produced a sustained seven-day tightening of global phase coherence across atomic clock arrays, self-resolving with a permanent shift in the timing baseline of approximately 8.4 nanoseconds per day relative to the pre-event calibration standard. We further document an Antarctic sub-glacial reference formation at 89.2°S that functions as the geometric anchor point for the distributed site network, consistent with its role as a fixed inertial coordinate in a global monitoring system. Archival materials recovered from the Meridian Cultural Advisory Group (MCAG) and the Vatican's restricted manuscript collection confirm that prior events were observed and classified, and that the 2026 terminal event was anticipated on the basis of this historical record. We present evidence that the Pre-Pottery Neolithic builders deliberately encoded knowledge of this phenomenon in durable monumental form, providing a message recoverable by any subsequent civilization with sufficient precision instrumentation. Infrastructure implications of the permanent baseline shift — including GPS recalibration requirements, atomic clock reference reassignment, and related effects on financial and communications timing systems — are addressed in the supplementary materials and in accompanying technical reports.
+    </p>
+    <div class="keywords"><strong>Keywords:</strong> Pre-Pottery Neolithic · Göbekli Tepe · Karahantepe · phase coherence · atomic timing · archaeoastronomy · GPS calibration · baseline shift · distributed monument network · Antarctic sub-glacial formations</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="paper-body">
+
+    <h2 class="section-head">1. Introduction</h2>
+
+    <p>
+      The hypothesis that Pre-Pottery Neolithic monument complexes in southeastern Turkey served functions beyond ritual or communal gathering has been a persistent undercurrent in archaeoastronomical literature for three decades. Proposals have ranged from calendrical encoding to horizon observation systems, most of which remain contested on methodological grounds. What the present investigation introduces is not a new interpretive framework for these sites in isolation but rather evidence — drawn from four independent data streams — that the sites form part of a coordinated global network, that this network was designed to monitor a specific geophysical phenomenon, and that this phenomenon has now been directly observed and measured.
+    </p>
+    <p>
+      The investigation began with a coincidence that, on closer examination, was not one. In the spring of 2025, orbital mechanics data collected at NASA's Johnson Space Center revealed a harmonic interval in the compression profile of near-Earth timing anomalies that matched, to within 0.3%, a proportional unit embedded in the architectural layout of the Karahantepe enclosure complex in Şanlıurfa Province, Turkey. This correspondence — the same ratio encoded in stone twelve thousand years ago and appearing in precision atomic timing data collected by modern instrumentation — was flagged by one of the present authors (D.M.) and communicated to the corresponding archaeologist (M.H.), who had been working the Karahantepe site for four years and who identified the proportional unit immediately.
+    </p>
+    <p>
+      The connection between these two data streams would not have been possible without the prior work of Thomas Iqbal, whose compilation of historical atomic timing anomalies — including a 1978 event identified in a partially declassified DoD advisory that he recovered from government archives — provided the baseline against which the compression profile could be interpreted. Iqbal did not survive to see the terminal event. His death in late 2024, the circumstances of which were the subject of investigation by Swiss and German authorities, cannot in good conscience be separated from the suppression history documented in Section 4. We submit this paper in his name and record, with the transparency that his work demanded and that institutional actors sought to prevent.
+    </p>
+    <p>
+      The structure of this paper proceeds as follows. Section 2 describes the methods employed across the four investigative streams. Section 3 presents the results: the Karahantepe disc and its encoded ratio, the compression timeline and its correlation with historical atomic timing anomalies, the global site network and its Antarctic reference point, and the January 2026 terminal event and its measured effects. Section 4 addresses the suppression history and its consequences for the scientific record. Section 5 draws conclusions and outlines the infrastructure implications discussed in greater detail in the supplementary materials.
+    </p>
+
+    <h2 class="section-head">2. Methods</h2>
+
+    <h3 class="subsection-head">2.1 Archaeological Investigation: Karahantepe Lower Chamber</h3>
+    <p>
+      Systematic excavation of the Karahantepe site (37.3°N, 38.7°E) has been conducted under Turkish Ministry of Culture permit since 2021. In August 2025, ground-penetrating radar survey of Enclosure C identified a subsurface anomaly at 6.4 meters depth inconsistent with the natural stratigraphy. Careful excavation over the following twelve days revealed a sealed lower chamber, approximately 4.2 meters in diameter, lined with dressed limestone and containing a single carved disc of apparent basalt, 31 centimeters in diameter, with engraved markings on both faces.
+    </p>
+    <p>
+      The disc was documented in situ with photogrammetric imaging and then transported to the Şanlıurfa Museum under Ministry supervision for analysis. Measurement of the engraved divisions on the primary face yielded two concentric ring systems: an outer ring of 84 equally spaced radial marks and an inner ring of 42 marks. The ratio 84:42 — reducible to 2:1 but architecturally expressed as the full values — corresponds precisely to the proportional unit found in the spatial arrangement of the Enclosure C orthostats and to the harmonic interval in the JSC orbital timing data described below. The secondary face carries a radial pattern whose angular encoding is the subject of ongoing analysis (Arslan et al., in preparation).
+    </p>
+
+    <h3 class="subsection-head">2.2 Atomic Timing Infrastructure Analysis</h3>
+    <p>
+      The JSC orbital mechanics dataset used in this investigation is the output of continuous atomic clock monitoring conducted as part of GPS ground control operations. Time-series analysis of phase coherence across distributed clock arrays — a secondary product of standard navigation operations — identified a long-cycle compression signature in which inter-clock variance narrowed progressively across intervals whose spacing matched the 84:42 ratio found at Karahantepe. Analysis of the full MCAG historical archive (see Section 2.5) extended this compression signature to six prior events with confirmed atomic timing records, with the earliest documented event corresponding to a declassified 1978 incident report describing a six-day self-resolving coherence anomaly attributed in the original document to an unspecified environmental variable.
+    </p>
+    <p>
+      The compression timeline derived from this combined dataset produced a projected terminal event date of January 11–17, 2026, with a confidence interval of ±4 days. Monitoring during the event period was conducted using twenty-seven atomic clock arrays across nine countries, with data shared in real time among the present authors.
+    </p>
+
+    <h3 class="subsection-head">2.3 Global Site Network Analysis</h3>
+    <p>
+      Identification of sites exhibiting the 84:42 architectural proportion, horizon orientation alignments consistent with the long-cycle interval, or both began with fourteen sites already present in the archaeoastronomical literature and was extended through systematic analysis of published monument surveys. The final network comprises forty-one sites across four continents: seventeen in Europe and western Asia, eleven in east and southeast Asia, eight in the Americas, and five in Africa. No sites have been identified in Australia or Antarctica, consistent with the builders' apparent use of the Antarctic formation as a fixed reference rather than a distributed monitoring node.
+    </p>
+    <p>
+      Site selection criteria, measurement methodology, and inter-site alignment calculations are provided in Supplementary Section A. All forty-one sites exhibited statistically significant coherence signatures during the January 2026 terminal event, as recorded by collocated or near-collocated monitoring instruments where available.
+    </p>
+
+    <h3 class="subsection-head">2.4 Antarctic Reference Formation</h3>
+    <p>
+      Ground-penetrating radar survey of the sub-glacial terrain at approximately 89.2°S was conducted by independent researcher E. Torres in November–December 2025 under a glaciological research permit. Torres's data, published separately in a glaciological journal two weeks prior to the present submission, revealed a formation of worked stone at approximately 300 meters depth beneath the East Antarctic Ice Sheet. The formation's surface dimensions and angular geometry are consistent with the architectural conventions of the Pre-Pottery Neolithic sites in the distributed network. The site's location at near-maximum proximity to the Earth's rotational axis — the closest fixed surface point to an inertial reference frame on a rotating planet — is not incidental to its function. The South Pole formation is the anchor coordinate against which the distributed network's measurements are calibrated, serving the same function as a primary benchmark in surveying.
+    </p>
+
+    <h3 class="subsection-head">2.5 Archival Analysis</h3>
+    <p>
+      The MCAG historical archive, comprising records from 1944 to 2024, was made available to the authors by Y. Acar following internal authorization from the MCAG Research Division directorship. The archive documents organizational awareness of the long-cycle timing phenomenon from its earliest operational period, including records of the 1978 event, a 1987 advisory distributed to twelve international heritage organizations recommending protocols for reporting subsurface anomalies at orientation marker sites, and a continuous program of atomic timing monitoring under the designation "Ecclesiastical Coordination" — a classification tag applied, as the archive confirms, because the phenomenon was first identified in records held by the Vatican.
+    </p>
+    <p>
+      The Vatican archival materials, accessed with the assistance of Father Benedetti, include a twelfth-century manuscript — catalogued as MS Vat. Lat. 6978 — that describes, in Latin technical prose, an event indistinguishable from the terminal event: a period of seven days in which "the measure of things was returned to what it was before men began to measure incorrectly." Paleographic dating and codicological analysis confirm the manuscript's twelfth-century provenance; the phenomenon it describes was clearly drawn from earlier source material whose original form has not been recovered.
+    </p>
+
+    <h2 class="section-head">3. Results</h2>
+
+    <h3 class="subsection-head">3.1 The Karahantepe Disc and the 84:42 Harmonic</h3>
+    <p>
+      The disc recovered from the Karahantepe lower chamber is the most explicit physical record of the builders' knowledge yet identified. The 84:42 ring system encodes the harmonic ratio at the heart of the long-cycle phenomenon: the outer ring documents the full interval (84 units) and the inner ring documents the half-interval at which phase coherence reaches its measurable threshold (42 units). In the compression timeline derived from the JSC and MCAG datasets, the interval between events narrows by a factor that converges on this ratio over successive cycles, with the final approach producing the terminal acceleration documented in the January 2026 event.
+    </p>
+    <p>
+      The same ratio appears in the spatial arrangement of the Enclosure C orthostats at Karahantepe — the distance between specific paired pillars, measured in a unit apparently derived from the precession cycle — and in the monument spacing at seventeen of the forty-one network sites. This consistency across four continents and twelve thousand years is not amenable to coincidental explanation.
+    </p>
+
+    <div class="table-wrap">
+      <div class="table-caption"><strong>Table 1.</strong> Selected network sites exhibiting the 84:42 architectural proportion, with associated atomic timing coherence signature during the January 2026 terminal event. Sites are listed by geographic region. Full table of all 41 sites is provided in Supplementary Table S1.</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>Location</th>
+            <th>Approx. Date</th>
+            <th>Encoded Proportion</th>
+            <th>Jan. 2026 Signature</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Karahantepe (primary)</td>
+            <td>37.3°N, 38.7°E</td>
+            <td>9600–9400 BCE</td>
+            <td>84:42 (disc + enclosure)</td>
+            <td>+8.3 ns shift confirmed</td>
+          </tr>
+          <tr>
+            <td>Göbekli Tepe</td>
+            <td>37.2°N, 38.9°E</td>
+            <td>9600–8200 BCE</td>
+            <td>84:42 (pillar spacing)</td>
+            <td>+8.4 ns shift confirmed</td>
+          </tr>
+          <tr>
+            <td>Karahan Tepe B (site cluster)</td>
+            <td>37.1°N, 38.6°E</td>
+            <td>9400–8800 BCE</td>
+            <td>84:42 (orientation)</td>
+            <td>+8.2 ns shift confirmed</td>
+          </tr>
+          <tr>
+            <td>Stonehenge (phase 1)</td>
+            <td>51.2°N, 1.8°W</td>
+            <td>3000–2800 BCE</td>
+            <td>84:42 (trilithon spacing)</td>
+            <td>+8.4 ns shift confirmed</td>
+          </tr>
+          <tr>
+            <td>Nabta Playa</td>
+            <td>22.5°N, 30.7°E</td>
+            <td>5000–4500 BCE</td>
+            <td>84:42 (radial alignment)</td>
+            <td>+8.3 ns shift confirmed</td>
+          </tr>
+          <tr>
+            <td>Chankillo</td>
+            <td>9.6°S, 78.6°W</td>
+            <td>300–200 BCE</td>
+            <td>84:42 (tower interval)</td>
+            <td>+8.5 ns shift confirmed</td>
+          </tr>
+          <tr>
+            <td>Poverty Point</td>
+            <td>32.6°N, 91.4°W</td>
+            <td>1700–1100 BCE</td>
+            <td>84:42 (ring proportion)</td>
+            <td>+8.3 ns shift confirmed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="subsection-head">3.2 The Compression Timeline: Six Historical Events</h3>
+    <p>
+      The MCAG archive, combined with the declassified 1978 DoD incident report and the JSC monitoring dataset, permits reconstruction of six prior events with sufficient documentation to characterize their coherence signatures. All six follow the same pattern: a progressive tightening of phase coherence across distributed atomic clock arrays over a period of four to eight days, self-resolving without intervention, producing no permanent baseline shift in any prior instance. The 2026 event is distinguished from all six predecessors by the production of a permanent baseline shift — a feature anticipated in the Vatican archival record, which explicitly distinguishes the terminal event from prior events by its lasting effect on "the measure of things."
+    </p>
+
+    <div class="table-wrap">
+      <div class="table-caption"><strong>Table 2.</strong> Documented phase coherence events, with available characterization data. Pre-1978 events are inferred from MCAG records and, where available, independent historical documentation. Duration values represent the coherence-tightening period; the 2026 event additionally produced a permanent baseline shift.</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Approx. Date</th>
+            <th>Duration</th>
+            <th>Source</th>
+            <th>Baseline Shift</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Event I</td>
+            <td>~9600 BCE (inferred)</td>
+            <td>Unknown</td>
+            <td>Disc encoding; site construction initiation</td>
+            <td>Presumed (original baseline)</td>
+          </tr>
+          <tr>
+            <td>Event II</td>
+            <td>~4200 BCE (inferred)</td>
+            <td>Unknown</td>
+            <td>MCAG oral tradition record; MS Vat. Lat. 6978 precursor</td>
+            <td>None documented</td>
+          </tr>
+          <tr>
+            <td>Event III</td>
+            <td>~1200 BCE (inferred)</td>
+            <td>~6 days</td>
+            <td>MCAG archive (translated clay tablet reference)</td>
+            <td>None documented</td>
+          </tr>
+          <tr>
+            <td>Event IV</td>
+            <td>~1150 CE</td>
+            <td>7 days</td>
+            <td>MS Vat. Lat. 6978 (primary source)</td>
+            <td>None documented</td>
+          </tr>
+          <tr>
+            <td>Event V</td>
+            <td>1978 CE</td>
+            <td>6 days</td>
+            <td>Declassified DoD incident report; MCAG archive</td>
+            <td>None documented</td>
+          </tr>
+          <tr>
+            <td>Event VI (Terminal)</td>
+            <td>Jan. 11–17, 2026</td>
+            <td>7 days</td>
+            <td>Direct instrumented observation (this paper)</td>
+            <td>+8.4 ns/day (permanent)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="subsection-head">3.3 The Global Monitoring Network</h3>
+    <p>
+      The forty-one confirmed network sites are not distributed randomly. Their geographic arrangement is consistent with a design optimizing angular coverage of the Earth's surface relative to the South Pole reference point: the sites are spaced so that no point on the Earth's surface is more than approximately 2,800 kilometers from a network node. This distribution would allow the network to characterize the spatial uniformity of a phase coherence event — to determine whether the phenomenon was global or regional — using purely architectural means, by comparing whether multiple sites showed identical behaviors simultaneously.
+    </p>
+    <p>
+      The January 2026 event confirmed this function. All forty-one sites produced identical coherence signatures within measurement error, establishing that the phenomenon is genuinely global — not an artifact of regional atomic clock infrastructure or atmospheric conditions. The builders appear to have anticipated exactly this ambiguity and built a verification system capable of resolving it. Whether they intended this network for their own use or for the use of whoever came next is an interpretive question we do not attempt to resolve here.
+    </p>
+
+    <div class="note-box">
+      <div class="note-label">Note on interpretive restraint</div>
+      We are aware that the argument advanced in this paper — that a pre-agricultural human population, twelve thousand years before the present, deliberately constructed a global infrastructure to document and transmit knowledge of a geophysical phenomenon they could measure but not fully explain — will encounter resistance proportional to its implications. We ask only that resistance be directed at the evidence rather than the conclusion. The evidence is what it is. The conclusion follows from it. We have spent three weeks stress-testing every link in this chain, and the chain holds.
+    </div>
+
+    <h3 class="subsection-head">3.4 The Antarctic Reference Formation</h3>
+    <p>
+      Torres's glaciological survey identified a sub-glacial anomaly at approximately 89.2°S whose radar return signature is inconsistent with natural bedrock formations at comparable depth. The formation's outline, at the resolution available through 300 meters of ice, is approximately circular with a diameter of roughly 18 meters and shows internal structural regularities — parallel linear features at consistent spacing — that match the architectural conventions of PPN enclosure construction. The formation lies beneath ice deposited over the past 12,000–15,000 years, consistent with a construction date during or immediately before the onset of glaciation at this latitude.
+    </p>
+    <p>
+      We do not claim to have excavated or directly examined this formation. We claim only that its location, depth, and radar signature are consistent with the hypothesis that it served as the fixed reference coordinate of the distributed monitoring network, and that this hypothesis is the simplest explanation compatible with all available data. Alternative hypotheses — natural formation, coincidental architectural similarity, glaciological anomaly of known type — have been considered and found inadequate by Torres, whose glaciological expertise we defer to on this point.
+    </p>
+
+    <h3 class="subsection-head">3.5 The Terminal Event and Measured Baseline Shift</h3>
+    <p>
+      The January 2026 terminal event was observed in real time by the present authors and by monitoring teams at the GPS ground control stations in Colorado Springs, Schriever Air Force Base, and Cape Canaveral. The event unfolded as follows: phase coherence across distributed clock arrays began tightening progressively on the morning of January 11 UTC, reaching maximum coherence — effective elimination of inter-clock variance across the monitored array — at approximately 14:22 UTC on January 14. This maximum coherence state persisted for approximately 19 hours before beginning to resolve, with normal inter-clock variance restored by January 17 UTC.
+    </p>
+    <p>
+      The resolution produced a permanent offset. All monitored clock arrays emerged from the event showing a consistent shift of +8.41 ± 0.06 nanoseconds per day relative to their pre-event calibration values. This shift is global, uniform, and stable: subsequent monitoring over six weeks has confirmed no drift or secondary perturbation. GPS systems calibrated to the pre-event baseline showed systematic positioning errors during the transition period; recalibration to the new baseline has been completed for primary civilian and military systems (see Supplementary Section C for recalibration methodology and status by system category).
+    </p>
+    <p>
+      The magnitude of the baseline shift — 8.41 nanoseconds per day — is not arbitrary. Expressed in the proportional units of the Karahantepe disc, it corresponds to a correction factor of exactly 1/84 of the full event cycle. This is, in all likelihood, the value the builders encoded: not a warning that something would happen, but a record of what the corrected state would measure like, so that whoever next came to these instruments would recognize it.
+    </p>
+
+    <h2 class="section-head">4. Discussion</h2>
+
+    <h3 class="subsection-head">4.1 Implications of Deliberate Prehistoric Encoding</h3>
+    <p>
+      The conventional model of Pre-Pottery Neolithic cognition does not accommodate the ability to detect long-cycle geophysical phenomena spanning thousands of years, design a distributed global monitoring network, and encode the relevant numerical parameters in monumental architecture durable enough to survive twelve millennia. The evidence presented here requires that this model be revised, or at minimum substantially complicated. We do not know how the builders detected the long-cycle interval. We do not know what instrumentation they used, whether they were themselves the inheritors of an earlier tradition, or how many attempts it took to produce a network with the geographic coverage and architectural consistency we have measured.
+    </p>
+    <p>
+      What we know is that they succeeded. The network functions. The ratio was preserved. The message was readable by the people who came next, once those people had built instruments precise enough to detect what the disc was describing. Acar's 2021 letter to the editor — "The question is not whether the builders encoded the interval. The question is whether they believed anyone would be capable of reading it when the time came" — understated the problem. The better question is how they could have known that anyone would be capable of reading it at all. The answer to that question may be among the most important things this investigation has yet to determine.
+    </p>
+
+    <h3 class="subsection-head">4.2 The Suppression Record</h3>
+    <p>
+      The MCAG archive documents a seventy-year program of systematic suppression of research findings related to the long-cycle timing phenomenon. This program included the reclassification of the 1978 DoD incident report under a heritage advisory designation that obscured its geophysical content; the institutional pressure applied to at least four researchers between 1988 and 2019 whose work approached the network hypothesis; the surveillance of the Göbekli Tepe and Karahantepe excavation sites from 2022 onward; and actions against Thomas Iqbal in the final months of his life, the specifics of which have been referred to law enforcement and are not detailed here.
+    </p>
+    <p>
+      We include this history not as accusation but as methodology. Any account of this phenomenon that omits the suppression record is incomplete in ways that have practical consequences. The suppression delayed public awareness of the terminal event by at least five years. Five years of preparation time for critical infrastructure operators — GPS ground control, power grid management, financial clearinghouse timing systems — was lost. The transition period for GPS recalibration could have been managed more smoothly. The secondary effects documented in the first weeks following the event (see Supplementary Section C) were, in several documented cases, directly attributable to the absence of advance information that existed in classified institutional records.
+    </p>
+    <p>
+      The MCAG Research Division, under its current directorship, has been a full collaborative partner in the preparation of this paper. The internal processes that produced the suppression program, and the institutional cultures that sustained it, are matters the organization is addressing in parallel. We record our judgment that their cooperation in this investigation, once the decision to cooperate was made, was genuine and consequential.
+    </p>
+
+    <h3 class="subsection-head">4.3 Infrastructure Implications</h3>
+    <p>
+      The permanent baseline shift has implications for every system that relies on atomic timing for positioning, synchronization, or coordination. GPS is the most visible of these. Financial trading infrastructure, cellular network synchronization, power grid phase management, and precision manufacturing tolerances are others. The recalibration process is not technically complex — it is a matter of updating reference values across distributed systems — but it requires coordination across institutional and national boundaries that, in the absence of advance preparation, proved harder than the technical problem itself.
+    </p>
+    <p>
+      The GPS Engineering community's rapid response to the recalibration requirement deserves acknowledgment. The corrected compensation algorithms were applied across primary civilian systems within eleven days of event resolution. The secondary effects documented in the transition period — a financial system timing anomaly in New York, a cellular synchronization disruption in Japan, a precision agriculture GPS failure in the Netherlands — were all resolved without permanent damage. We include this not to minimize those events but to note that the infrastructure was more resilient than the worst-case scenarios in the MCAG's own pre-event modeling. The sixty-three-day upper bound on disruption duration in that model was not approached. The new baseline is stable. Systems calibrated to it are functioning correctly. The transition is, at six weeks post-event, substantially complete.
+    </p>
+
+    <h3 class="subsection-head">4.4 Limitations</h3>
+    <p>
+      Several aspects of this investigation require acknowledgment as limitations. The MCAG archive has not undergone independent archival verification by a third party outside the present authorship group; we have provided raw scan access to three academic libraries, and independent review is ongoing. The South Pole formation has not been directly excavated and its identification as a Pre-Pottery Neolithic structure rests on inference from radar data and geometric argument. The mechanisms by which the builders detected and measured the long-cycle interval remain entirely unknown. The origin of the Vatican manuscript's source material — from where, and when, the knowledge it describes was originally recorded — is also unknown.
+    </p>
+    <p>
+      We note these gaps not as concessions to an argument against our conclusions but as an honest characterization of the research frontier. The gaps are large. They are also, for the first time in this investigation's history, openly documented.
+    </p>
+
+    <h2 class="section-head">5. Conclusions</h2>
+
+    <p>
+      We have documented, measured, and contextualized an event that a pre-agricultural human civilization anticipated and encoded in durable monumental form approximately twelve thousand years ago. The event is real, the encoding is real, and the correspondence between them is exact. The network is global, its reference is fixed, and the phenomenon it was designed to monitor has now run its full documented course.
+    </p>
+    <p>
+      The permanent baseline shift is not a disruption. It is, if the Vatican manuscript is read carefully, a correction — a return to a measurement standard that the builders considered more accurate than the one modern civilization had been using. Whether that framing carries scientific meaning beyond its historical interest is a question for future investigation. For now, the calibration has been performed. The instruments are running. The measure of things has changed, and we are working with what it gives us.
+    </p>
+    <p>
+      Thomas Iqbal asked the right question first. He did not live to see the answer. We offer this paper as the best version of the answer we know how to give.
+    </p>
+
+    <hr class="section-rule">
+
+    <div class="ack">
+      <strong>Acknowledgments.</strong> The authors thank E. Torres for access to pre-publication glaciological survey data and for patient explanation of Antarctic radar methodology to four people who had not previously considered the sub-glacial terrain south of 80°S. The authors thank the GPS Engineering and Operations staff at Schriever Space Force Base for their cooperation during the event monitoring period and their professionalism during the recalibration process. The MCAG Research Division's decision to make its archive available is recorded here as a matter of institutional history. The Pontifical Institute of Sacred Archaeology granted manuscript access under conditions the authors consider appropriate and with a scholarly generosity that rendered Father Benedetti's formal authorship credit, on reflection, the least the paper could offer. Selim Arslan was on administrative leave for the duration of the writing period and completed his sections from his home in Şanlıurfa. The paper is better for his stubbornness. Emre Çelik provided field support at Karahantepe for four years without institutional credit; that debt is noted and not discharged by noting it.
+    </div>
+
+    <h2 class="section-head">References</h2>
+
+    <div class="references">
+      <ol>
+        <li>Iqbal, T. (2023). Long-cycle harmonic intervals in near-Earth orbital timing anomalies: a preliminary analysis. <em>Astrophysical Journal Supplement Series</em>, 267(1), 14.</li>
+        <li>Hale, M. (2022). Precessional awareness in Pre-Pottery Neolithic monument construction: architectural evidence from Karahantepe and Göbekli Tepe. <em>Journal of World Prehistory</em>, 35(4), 291–334.</li>
+        <li>Arslan, S., &amp; Hale, M. (2024). Subsurface features at Karahantepe Enclosure C: ground-penetrating radar survey and preliminary stratigraphic analysis. <em>Journal of Archaeological Science: Reports</em>, 52, 104201.</li>
+        <li>Mercer, D. (2025). Compression profiles in GPS timing residuals: anomalous phase coherence signatures and their periodicity. <em>Journal of Geodesy</em>, 99(3), 41.</li>
+        <li>Acar, Y. (2021). Long-cycle resonance in distributed timing infrastructure: historical analogues [letter]. <em>Journal of Archaeoastronomy</em>, 36(2), 118–121.</li>
+        <li>Torres, E. (2026). Sub-glacial structural anomaly at 89.2°S: ground-penetrating radar characterization and geological assessment. <em>Journal of Glaciology</em>, 72(1), e003.</li>
+        <li>Benedetti, G. (2015). The technical vocabulary of medieval astronomical manuscripts: MS Vat. Lat. 6978 and its textual context. <em>Medievalia et Humanistica</em>, 41, 77–102.</li>
+        <li>US Department of Defense. (1978, declassified 1998). Incident report: anomalous synchronization behavior in distributed timing infrastructure [Document TR-78-0441]. Defense Technical Information Center.</li>
+        <li>Meridian Cultural Advisory Group. (1987). Advisory bulletin: protocols for reporting subsurface anomalies at prehistoric astronomical orientation sites [Internal circular, distributed to 12 heritage organizations]. MCAG Foundation Archive, Geneva.</li>
+        <li>Schmidt, K. (2012). <em>Göbekli Tepe: A Stone Age Sanctuary in South-Eastern Anatolia</em>. ex oriente.</li>
+        <li>Sweatman, M., &amp; Tsikritsis, D. (2017). Decoding Göbekli Tepe with archaeoastronomy: what does the fox say? <em>Mediterranean Archaeology and Archaeometry</em>, 17(1), 233–250.</li>
+        <li>Ruggles, C. (Ed.). (2015). <em>Handbook of Archaeoastronomy and Ethnoastronomy</em>. Springer.</li>
+        <li>Lombardi, M. A. (2023). Coordinated Universal Time: stability, international comparisons, and the effect of anomalous phase coherence events on GPS positioning accuracy. <em>Metrologia</em>, 60(3), 035001.</li>
+        <li>Hale, M., Mercer, D., &amp; Arslan, S. (2025). A shared proportional unit in Pre-Pottery Neolithic monument networks and modern orbital timing compression data: preliminary correspondence. [Preprint]. <em>EarthArXiv</em>.</li>
+      </ol>
+    </div>
+
+    <hr class="section-rule">
+
+    <p style="font-size: 0.78rem; color: var(--ink-light); font-family: 'Source Serif 4', serif; text-align: center; margin-top: 1.5rem;">
+      <strong>Supplementary materials</strong> — including full 41-site network data (Table S1), MCAG archive index, GPS recalibration status by system category (Section C), and Torres glaciological survey data — are available from the corresponding authors on reasonable request and have been deposited with all three publishing journals.
+    </p>
+
+    <p style="font-size: 0.72rem; color: var(--ink-light); font-family: 'Source Serif 4', serif; text-align: center; margin-top: 0.6rem;">
+      <em>Correspondence:</em> M. Hale, School of History, Classics and Archaeology, University of Edinburgh, Edinburgh EH8 9AG, UK · D. Mercer, NASA JSC, Houston TX 77058, USA
+    </p>
+
+    <p style="font-size: 0.72rem; color: var(--ink-light); font-family: 'Source Serif 4', serif; text-align: center; margin-top: 0.6rem;">
+      © 2026 The Authors. Published under CC BY 4.0.
+    </p>
+
+  </div><!-- /paper-body -->
+</div><!-- /paper -->
+
+</body>
+</html>
